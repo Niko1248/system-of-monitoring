@@ -1,0 +1,260 @@
+[
+	{
+		"id": 0,
+		"pin": 0,
+		"numberSystem": 222222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"kmu": "0120",
+		"chanels": "1122 12341",
+		"payloads": [
+			{
+				"payloads1": 1111111,
+				"payloads2": 1111111,
+				"payloads3": 1111111,
+				"payloads4": 1111111,
+				"payloads5": 1111111,
+				"payloads6": 1111111,
+				"payloads7": 1111111,
+				"payloads8": 1111111,
+				"payloads9": 1111111
+			}
+		],
+		"trases": [
+			{
+				"numberVariant": "Основная трасса",
+				"nodes": {
+					"node1": 595,
+					"node2": 600,
+					"node3": 500,
+					"node4": 423
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №1",
+				"nodes": {
+					"node1": 595,
+					"node2": 200,
+					"node3": 300
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №2",
+				"nodes": {
+					"node1": 595,
+					"node2": 2023420,
+					"node3": 300
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 234234234234,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №3",
+				"nodes": {
+					"node1": 595,
+					"node2": 200,
+					"node3": 300
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1245631,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №4",
+				"nodes": {
+					"node1": 595,
+					"node2": 200,
+					"node3": 300
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			}
+		]
+	},
+	{
+		"id": 1,
+		"pin": 1,
+		"numberSystem": 110222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"kmu": "0120",
+		"chanels": "1122 12341",
+		"payloads": [
+			{
+				"payloads1": 2222222,
+				"payloads2": 2222222,
+				"payloads3": 2222222,
+				"payloads4": 2222222,
+				"payloads5": 2222222,
+				"payloads6": 2222222,
+				"payloads7": 2222222,
+				"payloads8": 2222222,
+				"payloads9": 2222222
+			}
+		],
+		"trases": [
+			{
+				"numberVariant": "Основная трасса",
+				"nodes": {
+					"node1": 595,
+					"node2": 600,
+					"node3": 500,
+					"node4": 423
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №2",
+				"nodes": {
+					"node1": 595,
+					"node2": 200,
+					"node3": 300
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			}
+		]
+	},
+	{
+		"id": 2,
+		"pin": 2,
+		"numberSystem": 110222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"kmu": "0120",
+		"chanels": "1122 12341",
+		"payloads": [
+			{
+				"payloads1": 2222222,
+				"payloads2": 2222222,
+				"payloads3": 2222222,
+				"payloads4": 2222222,
+				"payloads5": 2222222,
+				"payloads6": 2222222,
+				"payloads7": 2222222,
+				"payloads8": 2222222,
+				"payloads9": 2222222
+			}
+		],
+		"trases": [
+			{
+				"numberVariant": "Основная трасса",
+				"nodes": {
+					"node1": 1111595,
+					"node2": 612300,
+					"node3": 52300,
+					"node4": 4212313
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1212331,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №33",
+				"nodes": {
+					"node1": 512395,
+					"node2": 200,
+					"node3": 301230
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			},
+			{
+				"numberVariant": "Вариант №323",
+				"nodes": {
+					"node1": 195,
+					"node2": 200,
+					"node3": 11
+				},
+				"lines": {
+					"line1": 2340,
+					"line2": 1231,
+					"line3": 1111
+				},
+				"pairs": {
+					"pair1": 12,
+					"pair2": 1,
+					"pair3": 4
+				}
+			}
+		]
+	}
+]

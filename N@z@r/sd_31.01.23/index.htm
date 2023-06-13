@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<title>Система мониторинга</title>
+		<link rel="stylesheet" href="/style.css">
+	</head>
+
+	<body>
+		<!-- <div id="p_preloader" class="preloader">
+			<div class="preloader__percent"></div>
+			<div class="load">
+				<div class="inload">
+				</div>
+			</div>
+		</div> -->
+
+
+		<!-- <div class="aut_container">
+
+			<form class="aut_form">
+				<div class="animation_load">
+					<div class="animation_load-line"></div>
+				</div>
+				<h2>Войдите в систему</h2>
+				<input type="text" id="login" placeholder="логин">
+				<input type="password" id="password" placeholder="пароль">
+				<button id="aut_btn">войти</button>
+			</form>
+
+		</div> -->
+
+		<header>
+			<main>
+				<div class="logo">
+					<div class="b1">M</div>
+					<p>ониторинг</p>
+				</div>
+				<div class="user">
+					<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+							fill="#2A4157" fill-opacity="0.24" />
+						<circle cx="12" cy="10" r="4" fill="#222222" />
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							d="M18.2209 18.2462C18.2791 18.3426 18.2613 18.466 18.1795 18.5432C16.5674 20.0662 14.3928 21 12 21C9.60728 21 7.43264 20.0663 5.82057 18.5433C5.73877 18.466 5.72101 18.3427 5.77918 18.2463C6.94337 16.318 9.29215 15 12.0001 15C14.7079 15 17.0567 16.3179 18.2209 18.2462Z"
+							fill="#222222" />
+					</svg>
+					<p id="ueser_status">admin</p>
+				</div>
+
+			</main>
+		</header>
+		<div class="sound__wrapper">
+
+
+			<div class="top_container">
+				<div class="wrapper__1--container">
+					<div>
+						<div class="btn__more">
+							инструменты
+							<p style="display: flex;"></p>
+						</div>
+						<div class="btn__sound">
+							<div class="wrapper_audio" style="z-index: 1000;">
+								<div class="box1"></div>
+								<div class="box2"></div>
+							</div>
+							<div class="reset_button" style="z-index: 1000;">
+								<svg id="reset_button" viewBox="0 0 30 30" width="20" height="20"
+									xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+									xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+									<path
+										d="m 20.602104,4.9848787 a 12.793296,12.555516 54.369314 0 1 4.77809,4.7191103 l -0.0172,-7.0786603 a 0.28268844,0.27743434 54.36927 0 1 0.27933,-0.2762 l 1.23374,0.0183 a 0.28378413,0.27850967 54.369312 0 1 0.27966,0.28649 l 0.0239,10.2432703 a 0.28323628,0.277972 54.36932 0 1 -0.29972,0.27624 l -10.15639,-0.90215 a 0.28323628,0.277972 54.36932 0 1 -0.25975,-0.30481 l 0.0884,-1.23766 a 0.28378413,0.27850967 54.369312 0 1 0.2989,-0.25606 l 7.27777,0.64882 A 10.948151,10.744666 54.369349 0 0 12.338684,5.3132187 c -5.8344403,1.12311 -9.5876903,6.8288503 -8.3675903,12.7188903 1.22009,5.89005 6.9587003,9.76862 12.7931403,8.64549 a 10.922949,10.719934 54.369365 0 0 6.32478,-3.86123 0.28268844,0.27743434 54.36927 0 1 0.38679,-0.0472 l 0.99292,0.75425 a 0.28378413,0.27850967 54.369312 0 1 0.0559,0.40018 12.757685,12.520569 54.36939 1 1 -3.92273,-18.9370203 z"
+										style="fill:#a8a2a2;fill-opacity:1;stroke:#a8a2a2;stroke-width:0.954;stroke-dasharray:none;stroke-opacity:1;transition: 0.3s" />
+								</svg>
+							</div>
+							<audio id="audio" class="audio" src="/alert.ogg" loop></audio>
+						</div>
+					</div>
+
+					<div class="wrapper__1">
+
+						<form class="search-form" action="" method="">
+							<div><label hidden for="system-search">Фильтр</label>
+								<input placeholder="Поиск..." type="search" name="system-search" id="system-search"
+									class="system-search">
+								<script>
+									document.querySelector('#system-search').addEventListener('keydown', function (e) {
+										if (e.keyCode === 13) {
+											event.preventDefault()
+										}
+									})
+								</script>
+							</div>
+							<div class="checkbox">
+								<div class="checkbox__wrap">
+									<div class="toggle-pill-dark">
+										<input type="checkbox" id="filter-on" name="state-on" value="В работе">
+										<label for="filter-on"></label>
+									</div>
+									<div class="checkbox__name">Исправные</div>
+								</div>
+								<div class="checkbox__wrap">
+									<div class="toggle-pill-dark">
+										<input type="checkbox" id="filter-off" name="state-off" value="Авария">
+										<label for="filter-off"></label>
+									</div>
+									<div class="checkbox__name">Неисправные</div>
+								</div>
+							</div>
+						</form>
+						<div class="log-read">
+							<div class="log-read__container">
+								<div class="log__button log-show__button">
+									LOG
+								</div>
+								<div class="log__button log-show__button">
+									КИД
+								</div>
+								<div class="log__button log-show__button">
+									Статистика
+								</div>
+
+							</div>
+							<div class="log-text__wrapper log-read__off">
+								<textarea name="log-area" id="log-area" cols="70" rows="10" readonly></textarea>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="main">
+					<div class="wrapper">
+						<div class="table" id="table-systems">
+							<div class="table__title">
+								<div>№</div>
+								<div>Система передачи</div>
+								<div>Приоритет</div>
+								<div>Корреспондент</div>
+								<div>Тип трассы</div>
+								<div>Состояние</div>
+							</div>
+						</div>
+						<div class="popup__bg">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			////////////////////////////MAIN-start////////////////////////////////////////////////
+
+			/* const preloaderPercent = document.querySelector('.preloader__percent')
+			const loadTime = 36
+			let percentCounter = 0
+			const perc = setInterval(() => {
+				percForSecond = Number((100 / loadTime).toFixed(2))
+				preloaderPercent.innerText = Number(percentCounter).toFixed(2) + "%"
+				percentCounter += percForSecond
+				if (percentCounter >= 97) {
+					preloaderPercent.innerText = 100 + "%"
+				} else if (percentCounter >= 100) {
+					clearInterval(perc)
+				}
+			}, 1000) */
+
+
+			// audio.play()
+
+			////////////////////////////////Аутентификация/////////////////////
+			// let password = document.querySelector('#password');
+			// let login = document.querySelector('#login');
+			// let key = ""
+
+			/* function Go() {
+				document.querySelector('.aut_container').classList.add('aut_close');
+				document.querySelector('body').style.overflowY = "visible";
+				document.querySelector('body').style.background = "1c1c1c";
+				document.querySelector('.top_container').classList.add('top_container--open');
+				document.querySelector('.animation_load').style.display = "none";
+				document.querySelector('.animation_load-line').style.display = "none";
+			} */
+
+
+
+			// function root_access() {
+			// 	var access = new XMLHttpRequest();
+			// 	access.onreadystatechange = function () {
+			// 		if (this.readyState == 4 && this.status == 200 && this.responseText != null) {
+			// 			if (this.responseText == key) {
+			// 				document.querySelector('.animation_load').classList.add('animation_load--s')
+			// 				document.querySelector('.animation_load-line').classList.add('animation_load-line--s')
+			// 				setTimeout(() => {
+			// 					document.querySelector('.animation_load').style.opacity = 0;
+			// 					document.querySelector('.animation_load-line').style.opacity = 0;
+			// 				}, 3000)
+			// 				setTimeout(() => {
+			// 					Go()
+			// 				}, 4000)
+			// 				setTimeout(() => {
+			// 					document.querySelector('.aut_container').style.display = "none";
+			// 				}, 4500)
+
+			// 			} else {
+			// 				check_aut_animation()
+			// 			}
+			// 		};
+			// 	}
+			// 	access.open("GET", "get_access_backend", true);
+			// 	access.send();
+			// }
+
+			// function check_aut_animation() {
+			// 	document.querySelector('.animation_load').classList.add('animation_load--error')
+			// 	document.querySelector('.animation_load-line').classList.add('animation_load-line--error')
+			// 	setTimeout(() => {
+			// 		document.querySelector('.animation_load--error').style.opacity = 1;
+			// 		document.querySelector('.animation_load-line--error').style.opacity = 1;
+			// 	}, 300)
+
+			// }
+
+			// document.querySelector('#aut_btn').addEventListener('click', function (event) {
+			// 	event.preventDefault()
+			// 	document.querySelector('.animation_load').classList.remove('animation_load--error')
+			// 	document.querySelector('.animation_load-line').classList.remove('animation_load-line--error')
+			// 	if (password.value.length == 0 || login.value == 0) {
+			// 		check_aut_animation()
+			// 	} else {
+			// 		key = login.value + password.value
+			// 		document.querySelector('.animation_load').style.opacity = 1;
+			// 		setTimeout(() => {
+			// 			root_access()
+			// 		}, 4000)
+			// 	}
+			// })
+
+			/////////////////////////////Аутентификация end/////////////////////
+
+
+			let val = 0
+
+
+			window.onload = function () {
+
+				const state = document.querySelectorAll('.state')
+				const system = document.querySelectorAll('.table__grid')
+				const correspondents = document.querySelectorAll('.correspondent')
+				const popupState = document.querySelectorAll('.popup__state')
+				const popupBG = document.querySelector('.popup__bg')
+				const form = document.querySelector('.search-form')
+				const numbersOfSystems = document.querySelectorAll('.numberSystem')
+				const filterOn = document.getElementById('filter-on')
+				const filterOff = document.getElementById('filter-off')
+				const systemActive = new Set()
+				const systemNonActive = new Set()
+				const wrapper_audio = document.querySelector('.wrapper_audio');
+				const audio = document.querySelector('.audio')
+				const resetButton = document.querySelector('.reset_button')
+				const preloader = document.querySelector('.preloader')
+				const logTextArea = document.querySelector('#log-area')
+				const logShowButton = document.querySelector('.log-show__button')
+				const logHiddenButton = document.querySelector('.log-hidden__button')
+				const logTextWrap = document.querySelector('.log-text__wrapper')
+				const data = new Date();
+				month = data.getMonth();
+				switch (month) {
+					case 0: fMonth = "января"; break;
+					case 1: fMonth = "февраля"; break;
+					case 2: fMonth = "марта"; break;
+					case 3: fMonth = "апреля"; break;
+					case 4: fMonth = "мае"; break;
+					case 5: fMonth = "июня"; break;
+					case 6: fMonth = "июля"; break;
+					case 7: fMonth = "августа"; break;
+					case 8: fMonth = "сентября"; break;
+					case 9: fMonth = "октября"; break;
+					case 10: fMonth = "ноября"; break;
+					case 11: fMonth = "декабря"; break;
+				}
+
+
+
+				///////////////////////////////// раскрытие меню инструментов start////////////////////////////
+				document.querySelector('.btn__more').addEventListener('click', () => {
+					let x = document.querySelector('#log-area').offsetWidth
+					document.querySelector('.wrapper__1').classList.toggle('open')
+					document.querySelector('.btn__more').classList.toggle('btn_open')
+					document.querySelector('.wrapper__1--container').classList.toggle('wrapper__1--container_open')
+				})
+				///////////////////////////////// раскрытие меню инструментов end////////////////////////////
+
+				///////////////////////////////// Preloader start//////////////////////////////////////
+
+				function load() {
+					preloader.classList.toggle('remove')
+					document.querySelector('body').style.overflowX = 'visible'
+					document.querySelector('body').style.overflowY = 'visible'
+				}
+				/* load(); */
+
+				///////////////////////////////// Preloader end////////////////////////////////////////
+
+				/////////////////////////////////// Обработка Ajax start///////////////////////////////
+				setTimeout(() => {
+					setInterval(function () {
+						getPinInfo();
+					}, 2000);
+					function getPinInfo() {
+						var PinRequest = new XMLHttpRequest();
+						PinRequest.onreadystatechange = function () {
+							if (this.readyState == 4 && this.status == 200 && this.responseText != null) {
+								stateArray = [];			// В этот массив передаются данные о состоянии пинов
+								stateArray += this.responseText;
+								numbersOfSystems.forEach((el, index, arr) => {
+									let systemRow = el.closest('.table__item');
+									let numberSyst = systemRow.querySelector('.numberSystem')
+									let systemState = systemRow.querySelector('.state');
+									const data = new Date();
+									const realTime = data.getDate() + ' ' + fMonth + ' ' + data.getFullYear() + ' ' + data.getHours() + ':' + data.getMinutes() + ':' + data.getSeconds()
+									let logInfoRecovery = '';
+									let logInfoCrash = '';
+									if (stateArray[index] == 1) {
+										systemActive.add(el)
+										systemState.innerText = 'В работе';
+										systemState.classList.remove('state_on')
+										systemState.classList.remove('state_off')
+										systemState.classList.add('state_on')
+										systemState.dataset.sound = 'on'
+										if (systemState.dataset.log == 'on') {
+											let logInfoRecovery = '{"type": "Восстановлено",' + '"numberSystem": ' + numberSyst.innerHTML + ',' + '"time": ' + '"' + realTime + '"' + '},';
+											const recoveryInfoXHR = new XMLHttpRequest();
+											recoveryInfoXHR.open('POST', 'log_write', true);
+											recoveryInfoXHR.send(logInfoRecovery);
+											systemState.dataset.log = 'ready';
+										}
+									} else if (stateArray[index] == 0) {
+										systemNonActive.add(el);
+										systemState.innerText = 'Авария';
+										systemState.classList.remove('state_on')
+										systemState.classList.remove('state_off')
+										systemState.classList.add('state_off')
+										if (systemState.dataset.sound == 'on') {
+											audio.play()
+										}
+										if (systemState.dataset.log == 'ready') {
+											const crashInfoXHR = new XMLHttpRequest();
+											let logInfoCrash = '{"type": "Авария",' + '"numberSystem": ' + numberSyst.innerHTML + ',' + '"time": ' + '"' + realTime + '"' + '},';
+											crashInfoXHR.open('POST', 'log_write', true);
+											crashInfoXHR.send(logInfoCrash);
+											systemState.dataset.log = 'on';
+										}
+									}
+								});
+								popupState.forEach((el, index, arr) => {
+									if (stateArray[index] == 1) {
+										el.innerText = 'В работе';
+										el.classList.remove('state_on')
+										el.classList.remove('state_off')
+										el.classList.add('state_on')
+									} else if (stateArray[index] == 0) {
+										el.innerText = 'Авария';
+										el.classList.remove('state_on')
+										el.classList.remove('state_off')
+										el.classList.add('state_off')
+									}
+								});
+							}
+						};
+						PinRequest.open("GET", "readPinInfo", true);
+						PinRequest.send();
+						filterState();
+						systemActive.clear();
+						systemNonActive.clear();
+						if (systemNonActive.size == 0) {
+							audio.pause();
+						}
+					}
+					getPinInfo()
+				}, 5000)
+
+				/////////////////////////////////// Обработка Ajax end////////////////////////////////////////
+
+				///////////////////////////////// Звуковая сигнализация start/////////////////////////////////
+
+				function resetSound() {
+					resetButton.addEventListener('click', () => {
+						audio.pause()
+						state.forEach(el => {
+							if (el.innerText == 'Авария') {
+								el.dataset.sound = 'off'
+							}
+						});
+					})
+
+				}
+
+				function MuteSound() {
+					document.querySelector('#audio').muted = false;
+					wrapper_audio.addEventListener('click', function () {
+						wrapper_audio.classList.toggle('off')
+						document.querySelector('audio').muted = !document.querySelector('audio').muted;
+					})
+				}
+				resetSound()
+				MuteSound()
+
+				///////////////////////////////// Звуковая сигнализация end///////////////////////////////////
+
+				////////////////////////////////////// Popup start///////////////////////////////////////////
+
+
+				function popup() {
+					// Отображение и скрытие попапа
+					system.forEach(function (item) {
+						item.addEventListener('click', function () {
+
+							let popup = item.querySelector('.popup')
+							let width_position = (document.documentElement.clientWidth - popup.offsetWidth) / 2
+							let height_position = document.documentElement.clientHeight / 2 - (popup.offsetHeight / 2)
+							popupBG.classList.add('popup__bg--on')
+							popup.classList.add('popup__on')
+							popup.style.top = height_position + "px"
+							popup.style.left = width_position + "px"
+							document.querySelector('body').style.overflowY = "hidden"
+
+							let popupClose = item.querySelector('.close')
+							popupClose.addEventListener('click', (event) => {
+								event.stopPropagation()
+								popupBG.classList.remove('popup__bg--on')
+								popup.classList.remove('popup__on')
+								document.querySelector('body').style.overflowY = "visible"
+							}
+							)
+						})
+					})
+				}
+				popup()
+				/////////////////////////////////////// Popup end////////////////////////////////////////////
+
+
+
+
+
+
+
+				////////////////////////////////////// Filters start///////////////////////////////////////////
+
+				///////////////////////////// Фильтр поиск start/////////////////////////////////
+				function filter(ev) {
+					ev.preventDefault()
+					const input = document.querySelector('#system-search')
+					if (Number(input.value)) {
+						let inputValue = input.value.replace(/\D/g, '') // Получает только цифры введенные в поле поиска
+						numbersOfSystems.forEach((item) => {
+							let numberSystem = item.innerHTML // Получаем номер системы
+							let parentNumber = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (numberSystem.includes(inputValue)) {
+								parentNumber.classList.add('.show_search')
+								parentNumber.classList.remove('.hidden_search')
+							} else {
+								parentNumber.classList.add('hidden_search')
+								parentNumber.classList.remove('show_search')
+							}
+						})
+					} else {
+						let inputValue = input.value.replace(/\d/g, '') // Получает только цифры введенные в поле поиска
+						correspondents.forEach((item) => {
+							let correspondent = item.innerHTML.toLowerCase() // Получаем корреспондента
+							let parentCorrespondent = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (correspondent.includes(inputValue.toLowerCase())) {
+								parentCorrespondent.classList.add('.show_search')
+								parentCorrespondent.classList.remove('.hidden_search')
+							} else {
+								parentCorrespondent.classList.add('hidden_search')
+								parentCorrespondent.classList.remove('show_search')
+							}
+						})
+					}
+				}
+				function filterReset() {
+					const input = document.querySelector('#system-search')
+					numbersOfSystems.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+					correspondents.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+				}
+
+				form.addEventListener('keyup', filter)
+				form.addEventListener('keyup', filterReset)
+				///////////////////////////// Фильтр поиск end/////////////////////////////////
+
+				//////////////////////////// Фильтры состояния checkbox start//////////////////
+				function filterState() {
+
+					//Когда идут реквесты, каждый раз сбрасывает все классы
+					//И в зависимости от нажатой кнопки скрывает ненужное
+
+					const StateSet = new Set() // Множество для хранения состояния нажатых checkbox
+					if (filterOn.checked) {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+					} else if (filterOff.checked) {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+					}
+					if (filterOn.checked) {
+						systemNonActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							parentState.classList.add('hidden_check')
+						})
+					}
+					if (filterOff.checked) {
+						systemActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							parentState.classList.add('hidden_check')
+						})
+					}
+
+					//Здесь все завязано на кнопку "В работе", в соответствии с нажатой кнопкой скрывает ненужное
+					//Когда отжал кнопку, возвращает
+
+					filterOn.addEventListener('click', () => {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+						systemNonActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							if (filterOn.checked) {
+								parentState.classList.add('hidden_check')
+								StateSet.add(1)   			//при нажатии на On добавляем 1 в множество
+							} else if (filterOn.checked === false) {
+								parentState.classList.remove('hidden_check')
+								StateSet.delete(1)			//при отжатии убираем 1 из множестваа
+							}
+							if (StateSet.size == 2) { // При одновременном нажатии двух checkbox, сбрасывает их
+								system.forEach((el) => {
+									let parentState = el.closest('.table__grid')
+									parentState.classList.remove('hidden_check')
+								})
+								if (filterOn.checked && filterOff.checked) {
+									filterOn.checked = false
+									filterOff.checked = false
+								}
+								StateSet.clear()
+							}
+						})
+					})
+					//Здесь все завязано на кнопку "Авария", в соответствии с нажатой кнопкой скрывает ненужное
+					//Когда отжал кнопку, возвращает
+					filterOff.addEventListener('click', () => {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+						systemActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							if (filterOff.checked) {
+								parentState.classList.add('hidden_check')
+								StateSet.add(2)
+							} else if (filterOff.checked === false) {
+								parentState.classList.remove('hidden_check')
+								StateSet.delete(2)
+							}
+							if (StateSet.size == 2) { // При одновременном нажатии двух checkbox, сбрасывает их
+								system.forEach((el) => {
+									let parentState = el.closest('.table__grid')
+									parentState.classList.remove('hidden_check')
+								})
+								if (filterOn.checked && filterOff.checked) {
+									filterOn.checked = false
+									filterOff.checked = false
+								}
+								StateSet.clear()
+							}
+						})
+					})
+				}
+				//////////////////////////// Фильтры состояния checkbox end//////////////////
+
+				////////////////////////////////////// Filters end///////////////////////////////////////////
+
+				////////////////////////////////////// Чтение лог файла start///////////////////////////////////////////
+
+				async function readLog() {
+					let response = await fetch('/log.xml')
+					//присваиваем значение массива переменной
+					let logText = await response.text() // Распарсили в текст
+					let logTextCorrect = logText.slice(0, -1); //Убрали лишнюю запятую
+					logTextCorrect += "]"
+					let logArray = JSON.parse(logTextCorrect)
+					//теперь передаем этоту переменную с массивом в другую функцию
+					renderLog(logArray)
+				}
+
+				function renderLog(logArray) {
+					logTextArea.innerHTML = '';
+					logArray.forEach(function (item) {
+						const logHTML = `${item.type}: Система передачи - ${item.numberSystem} Время: ${item.time}\n`
+						logTextArea.insertAdjacentHTML('beforeend', logHTML)
+					})
+				}
+				logShowButton.addEventListener('click', () => {
+					/* logHiddenButton.classList.remove('log-read__off') */
+					logTextWrap.classList.toggle('log-read__off')
+					readLog()
+				})
+
+				////////////////////////////////////// Чтение лог файла end///////////////////////////////////////////
+
+				/* reserve_var(); */
+			}
+
+			////////////////////////////MAIN-end////////////////////////////////////////////////
+
+			///////////////////////////RENDER_SYSTEMS-start/////////////////////////////////////
+			const systemsContainer = document.querySelector('#table-systems')
+
+			getSystems()
+
+			async function getSystems() {
+				//получаем массив из json в котором мы определили массив
+				//обязательно через await,необходимо достоверно получить данные
+				const response = await fetch('/sis.xml')
+				//присваиваем значение массива переменной
+				const systemsArray = await response.json()
+				//теперь передаем этоту переменную с массивом в другую функцию
+				renderSystems(systemsArray);
+				reserve_var(systemsArray);
+			}
+
+			function renderSystems(systemsArray) {
+				//перебираем все элементы в массиве и вставляем их в шаблон
+				systemsArray.forEach(function (item) {
+					const systemHTML =
+						`<div class="table__grid">
+						<div class="table__item">
+							<div class="row-number"></div>
+							<div class="numberSystem">${item.numberSystem}</div>
+							<div>${item.priority}</div>
+							<div class="correspondent">${item.correspondent}</div>
+							<div>${item.type}</div>
+							<div class="state" data-sound="on" data-log="ready"></div>
+						</div>
+					<div class="popup__wrapper">
+						<div class="popup">
+							<div class="popup__header">
+								<div style="margin-left:20px;">Система передач №:${item.numberSystem}																
+								</div>
+								<div class="close">
+										<div></div>
+										<div></div>
+								</div>
+							</div>
+							
+							<div class="popup__content">
+								<div class="popup__state"><p style="margin:50px 0px 20px 0px;font-weight:bold">Состояние:</p></div>
+								<div class="popup__content-down" style="text-align: start;">
+									<h3 style="margin-bottom:10px;font-weight:bold">Загрузка:</h3> 
+									<ul>
+										<li> "Изделие"- УС"ХХХХХХ" - 1432211</li>
+										<li> "Транзит"- УС"ХХХХХХ" - УС"ХХХХХХ" 3322</li>
+										<li> "Транзит"- УС"ХХХХХХ" - УС"ХХХХХХ" 4112</li>
+										<li> "Транзит"- УС"ХХХХХХ" - УС"ХХХХХХ" 5012</li>
+										<li> "Изделие"- УС"ХХХХХХ" - 3421331 </li>
+										<li> "Изделие"- УС"ХХХХХХ" - 1432211</li>
+										<li> "Изделие"- УС"ХХХХХХ" - 332142 </li>
+										<li> "Изделие"- УС"ХХХХХХ" - 512112 </li>			
+										<li> "Изделие"- УС"ХХХХХХ" - 3421331 </li>
+										<li> "Изделие"- УС"ХХХХХХ" - 1432211</li>
+										<li> "Транзит"- УС"ХХХХХХ" - УС"ХХХХХХ" 3322</li>
+										<li> "Транзит"- УС"ХХХХХХ" - УС"ХХХХХХ" 4112</li>
+										<li> "Транзит"- УС"ХХХХХХ" - УС"ХХХХХХ" 5012</li>
+										<li> "Изделие"- УС"ХХХХХХ" - 3421331 </li>
+										<li> "Изделие"- УС"ХХХХХХ" - 1432211</li>
+										<li> "Изделие"- УС"ХХХХХХ" - 332142 </li>
+										<li> "Изделие"- УС"ХХХХХХ" - 512112 </li>			
+										<li> "Изделие"- УС"ХХХХХХ" - 3421331 </li>
+									</ul>	
+										
+
+								</div>
+								<div class="popup__reserve">
+									<p style="margin:10px 0;font-weight:bold">Вариант резервирования:</p>
+									<select class="reserve">
+										<option selected value="0">Основная трасса</option>
+										<option value="1">Вариант 3/14</option>
+										<option value="2">Вариант 12/1</option>
+										<option value="3">Вариант 4/1</option>
+										<option value="4">Вариант 2/5</option>
+										<option value="5">Вариант 3/14</option>
+										<option value="6">Вариант 12/1</option>
+										<option value="7">Вариант 4/1</option>
+										<option value="8">Вариант 2/5</option>
+									</select>
+									
+									<div class="pic-trace">
+										
+										<div class="circle">${item.trases[val][`node1`]}</div>
+										<div class="trase_line">
+											<p class="KMU">${item.trases[val][`line-1`]}</p>
+											<p class="HF-pair">${item.trases[val][`HF-pair-1`]}</p>
+										</div>
+										<div class="circle">285Т</div>
+										
+										<div class="trase_line">
+											<p class="KMU">ОМУ3303</p>
+											<p class="HF-pair">1</p>
+										</div>
+										<div class="circle">666Б</div>
+										
+										<div class="trase_line">
+											<p class="KMU">1223</p>
+											<p class="HF-pair">14</p>
+										</div>
+										<div class="circle">210Б</div>
+
+									</div>
+								</div>	
+							</div>
+						</div>	
+					</div>`
+					//вставляем шаблон в страницу(отрисовываем)
+					systemsContainer.insertAdjacentHTML('beforeend', systemHTML)
+
+				})
+			}
+			///////////////////////////RENDER_SYSTEMS-end/////////////////////////////////////
+
+			/* ///////////////////////////change reservations option START/////////////////////////////////////
+
+			async function reserve_var() {
+
+				let sel = document.querySelectorAll('.reserve');
+				let kmu = document.querySelectorAll('.KMU');
+
+				//получаем массив из json в котором мы определили массив
+				//обязательно через await,необходимо достоверно получить данные
+				const response = await fetch('/sis.xml')
+				//присваиваем значение массива переменной
+				const systemsArray = await response.json()
+				//теперь передаем этоту переменную с массивом в другую функцию
+
+				systemsArray.forEach(function (s) {
+
+					kmu.forEach(function (l) {
+						l.innerText = s.trases[val][`line-1`];
+					})
+
+					console.log(val);
+				})
+			}
+			sel.forEach(function (el) {
+				el.addEventListener('change', function (e) {
+					getOptions()
+					val = Number(e.target.value);
+				})
+			}) */
+
+
+            ///////////////////////////change reservations option END/////////////////////////////////////
+		</script>
+
+	</body>
+
+</html>
+
+<!-- '{"type": "Авария"' + '"numberSystem": ' + numberSyst.innerHTML + ',' + '"time": ' + '"' + realTime + '"' + '},'; -->
+<!-- '\t{\n\t\t"type": "Восстановлено",\n' + '\t\t"numberSystem": ' + numberSyst.innerHTML + ',\n' + '\t\t"time": ' + '"' + realTime + '"' + '\n\t},'; -->

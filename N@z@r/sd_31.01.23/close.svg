@@ -1,0 +1,34 @@
+<svg
+   viewBox="0 0 30 30"
+   width="30"
+   height="30"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+      <style
+       id="style1493">.cls-1{fill:none;}</style>
+  <g
+     transform="translate(-0.88355342,-1.1140456)"
+     style="fill:#ffffff">
+    <path
+       d="M 16,29 A 13,13 0 1 1 29,16 13,13 0 0 1 16,29 Z M 16,5 A 11,11 0 1 0 27,16 11,11 0 0 0 16,5 Z"
+       id="path1499"
+       style="fill:#ffffff" />
+    <path
+       d="m 11.76,21.24 a 1,1 0 0 1 -0.71,-0.29 1,1 0 0 1 0,-1.41 l 8.49,-8.49 A 1.0148522,1.0148522 0 0 1 21,12.46 L 12.46,21 a 1,1 0 0 1 -0.7,0.24 z"
+       id="path1501"
+       style="fill:#ffffff" />
+    <path
+       d="m 20.24,21.24 a 1,1 0 0 1 -0.7,-0.29 l -8.49,-8.49 a 1,1 0 0 1 1.41,-1.41 L 21,19.54 a 1,1 0 0 1 0,1.46 1,1 0 0 1 -0.76,0.24 z"
+       id="path1503"
+       style="fill:#ffffff" />
+  </g>
+  <g>
+    <rect
+       class="cls-1"
+       height="32"
+       width="32"
+       id="rect1506"
+       x="0"
+       y="0" />
+  </g>
+</svg>

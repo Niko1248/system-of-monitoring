@@ -1,0 +1,434 @@
+[
+	{
+		"id": 1,
+		"numberSystem": 110222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 2,
+		"numberSystem": 1222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 3,
+		"numberSystem": 1827,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 4,
+		"numberSystem": 110562,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 5,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 6,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 7,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 8,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 9,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 10,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 11,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 12,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 1,
+		"numberSystem": 110222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 2,
+		"numberSystem": 1222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 3,
+		"numberSystem": 1827,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 4,
+		"numberSystem": 110562,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 5,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 6,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 7,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 8,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 9,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 10,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 11,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 12,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 1,
+		"numberSystem": 110222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 2,
+		"numberSystem": 1222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 3,
+		"numberSystem": 1827,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 4,
+		"numberSystem": 110562,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 5,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 6,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 7,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 8,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 9,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 10,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 11,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 12,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 1,
+		"numberSystem": 110222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 2,
+		"numberSystem": 1222,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 3,
+		"numberSystem": 1827,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 4,
+		"numberSystem": 110562,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 5,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 6,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 7,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 8,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 9,
+		"numberSystem": 1824,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 10,
+		"numberSystem": 131100,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 11,
+		"numberSystem": 1152,
+		"priority": "Особо важная",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Цифровая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	},
+	{
+		"id": 12,
+		"numberSystem": 184572,
+		"priority": "Обыкновенный",
+		"correspondent": "УС ХХХХ - УС ХХХХ",
+		"type": "Аналоговая",
+		"trace": "1827 + 1225 + 110152",
+		"chanels": "1122 12341"
+	}
+]

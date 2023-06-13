@@ -1,0 +1,886 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Система мониторинга</title>
+		<link rel="stylesheet" href="/user.css">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="notify_container">
+			<div class="notify">
+				<p class="notify_status"></p>
+			</div>
+		</div>
+
+		<div class="aut_container">
+			<form class="aut_form">
+				<div class="animation_load">
+					<div class="animation_load-line"></div>
+				</div>
+				<h2>Войдите в систему</h2>
+				<input type="text" id="login" placeholder="логин" disabled>
+				<input type="password" id="password" placeholder="пароль" disabled>
+				<button id="aut_btn" disabled>Идёт загрузка ...</button>
+			</form>
+		</div>
+
+		<header>
+			<main>
+				<div class="logo">
+					<div class="b1">M</div>
+					<p>ониторинг</p>
+				</div>
+				<div class="user">
+					<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+							fill="#2A4157" fill-opacity="0.24" />
+						<circle cx="12" cy="10" r="4" fill="#222222" />
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							d="M18.2209 18.2462C18.2791 18.3426 18.2613 18.466 18.1795 18.5432C16.5674 20.0662 14.3928 21 12 21C9.60728 21 7.43264 20.0663 5.82057 18.5433C5.73877 18.466 5.72101 18.3427 5.77918 18.2463C6.94337 16.318 9.29215 15 12.0001 15C14.7079 15 17.0567 16.3179 18.2209 18.2462Z"
+							fill="#222222" />
+					</svg>
+					<p id="ueser_status">User</p>
+				</div>
+			</main>
+		</header>
+		<div class="sound__wrapper">
+			<div class="top_container">
+				<div class="wrapper__1--container">
+					<div>
+						<div class="btn__more">
+							инструменты
+							<p style="display: flex;"></p>
+						</div>
+						<div class="btn__sound">
+							<div class="wrapper_audio" style="z-index: 1000;">
+								<div class="box1"></div>
+								<div class="box2"></div>
+							</div>
+							<div class="reset_button" style="z-index: 1000;">
+								<svg id="reset_button" viewBox="0 0 30 30" width="20" height="20"
+									xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+									xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+									<path
+										d="m 20.602104,4.9848787 a 12.793296,12.555516 54.369314 0 1 4.77809,4.7191103 l -0.0172,-7.0786603 a 0.28268844,0.27743434 54.36927 0 1 0.27933,-0.2762 l 1.23374,0.0183 a 0.28378413,0.27850967 54.369312 0 1 0.27966,0.28649 l 0.0239,10.2432703 a 0.28323628,0.277972 54.36932 0 1 -0.29972,0.27624 l -10.15639,-0.90215 a 0.28323628,0.277972 54.36932 0 1 -0.25975,-0.30481 l 0.0884,-1.23766 a 0.28378413,0.27850967 54.369312 0 1 0.2989,-0.25606 l 7.27777,0.64882 A 10.948151,10.744666 54.369349 0 0 12.338684,5.3132187 c -5.8344403,1.12311 -9.5876903,6.8288503 -8.3675903,12.7188903 1.22009,5.89005 6.9587003,9.76862 12.7931403,8.64549 a 10.922949,10.719934 54.369365 0 0 6.32478,-3.86123 0.28268844,0.27743434 54.36927 0 1 0.38679,-0.0472 l 0.99292,0.75425 a 0.28378413,0.27850967 54.369312 0 1 0.0559,0.40018 12.757685,12.520569 54.36939 1 1 -3.92273,-18.9370203 z"
+										style="fill:#a8a2a2;fill-opacity:1;stroke:#a8a2a2;stroke-width:0.954;stroke-dasharray:none;stroke-opacity:1;transition: 0.3s" />
+								</svg>
+							</div>
+							<audio id="audio" class="audio" src="/alert.ogg" loop></audio>
+						</div>
+					</div>
+
+					<div class="wrapper__1">
+						<form class="search-form" action="" method="">
+							<div><label hidden for="system-search">Фильтр</label>
+								<input placeholder="Поиск..." type="search" name="system-search" id="system-search"
+									class="system-search">
+								<script>
+									document.querySelector('#system-search').addEventListener('keydown', function (e) {
+										if (e.keyCode === 13) {
+											event.preventDefault()
+										}
+									})
+								</script>
+							</div>
+							<div class="checkbox">
+								<div class="checkbox__wrap">
+									<div class="toggle-pill-dark">
+										<input type="checkbox" id="filter-on" name="state-on" value="В работе">
+										<label for="filter-on"></label>
+									</div>
+									<div class="checkbox__name">Исправные</div>
+								</div>
+								<div class="checkbox__wrap">
+									<div class="toggle-pill-dark">
+										<input type="checkbox" id="filter-off" name="state-off" value="Авария">
+										<label for="filter-off"></label>
+									</div>
+									<div class="checkbox__name">Неисправные</div>
+								</div>
+							</div>
+						</form>
+						<div class="log-read">
+							<div class="log-read__container">
+								<div class="log__button log-show__button">
+									Показать log
+								</div>
+							</div>
+							<div class="log-text__wrapper log-read__off">
+								<textarea name="log-area" id="log-area" class="log-read__off" cols="70" rows="10"
+									readonly></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="main">
+					<div class="wrapper">
+						<div class="table" id="table-systems">
+							<div class="table__title">
+								<div>№</div>
+								<div>Вид СП</div>
+								<div>Система передачи</div>
+								<div>Приоритет</div>
+								<div>Корреспондент</div>
+								<div>КМУ</div>
+								<div>Тип трассы</div>
+								<div>Состояние</div>
+							</div>
+						</div>
+						<div class="popup__bg">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer style="width: 100%; margin: 0 auto; text-align: center; font-size: 0.7em;">
+			<p>© Центр связи стационарных узлов связи г.Чехов </p>
+			<p style="display: block; margin-top: 5px;">2023г.</p>
+		</footer>
+
+		<script>
+			////////////////////////////////Аутентификация///////////////////////////////////////
+			let password = document.querySelector('#password');
+			let login = document.querySelector('#login');
+			let joinBtn = document.querySelector('#aut_btn')
+			let key = ""
+
+			function Go() {
+				document.querySelector('.aut_container').classList.add('aut_close');
+				document.querySelector('body').style.overflowY = "visible";
+				document.querySelector('body').style.background = "1c1c1c";
+				document.querySelector('.top_container').classList.add('top_container--open');
+				document.querySelector('.animation_load').style.display = "none";
+				document.querySelector('.animation_load-line').style.display = "none";
+			}
+
+			function root_access(key) {							//Функция отправки на сервер введенного логина и пароля, запуска основной функции при правильной комбинации 
+				var access = new XMLHttpRequest();
+				access.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200 && this.responseText != null) {
+						if (this.responseText == 'ok') {
+							document.querySelector('.animation_load').classList.add('animation_load--s')
+							document.querySelector('.animation_load-line').classList.add('animation_load-line--s')
+							mainFunction()
+							setTimeout(() => {
+								document.querySelector('.animation_load').style.opacity = 0;
+								document.querySelector('.animation_load-line').style.opacity = 0;
+							}, 3000)
+							setTimeout(() => {
+								Go()
+							}, 4000)
+							setTimeout(() => {
+								document.querySelector('.aut_container').style.display = "none";
+							}, 4500)
+
+						} else {
+							check_aut_animation()
+						}
+					};
+				}
+				access.open("POST", "get_access_user", true);
+				access.send(key);
+			}
+
+			function check_aut_animation() {
+				document.querySelector('.animation_load').classList.add('animation_load--error')
+				document.querySelector('.animation_load-line').classList.add('animation_load-line--error')
+				setTimeout(() => {
+					document.querySelector('.animation_load--error').style.opacity = 1;
+					document.querySelector('.animation_load-line--error').style.opacity = 1;
+				}, 300)
+
+			}
+
+			joinBtn.addEventListener('click', function (event) {		// Слушатель на кнопку "Войти" + проверка на пустые строки в логине и пароле
+				event.preventDefault()
+				document.querySelector('.animation_load').classList.remove('animation_load--error')
+				document.querySelector('.animation_load-line').classList.remove('animation_load-line--error')
+				if (password.value.length == 0 || login.value == 0) {
+					check_aut_animation()
+				} else {
+					key = login.value.toLowerCase() + password.value
+					document.querySelector('.animation_load').style.opacity = 1;
+					setTimeout(() => {
+						root_access(key)
+					}, 4000)
+				}
+			})
+
+			document.addEventListener('DOMContentLoaded', () => {		//Активация полей Логин пароль и кнопки войти, только после полного построения DOM (т.к. CSS закэширован)
+				login.disabled = false
+				password.disabled = false
+				joinBtn.disabled = false
+				joinBtn.innerText = 'Войти'
+			})
+			/////////////////////////////Аутентификация end/////////////////////
+
+			////////////////////////////MAIN-start////////////////////////////////////////////////
+			function scriptAfterLoad() {
+				const state = document.querySelectorAll('.state')
+				const system = document.querySelectorAll('.table__grid')
+				const correspondents = document.querySelectorAll('.correspondent')
+				const popupState = document.querySelectorAll('.popup__state')
+				const popupBG = document.querySelector('.popup__bg')
+				const form = document.querySelector('.search-form')
+				const numbersOfSystems = document.querySelectorAll('.numberSystem')
+				const kmuNumbers = document.querySelectorAll('.kmu-number')
+				const kmuAlertContainer = document.querySelector('.wrapper__1')
+				const filterOn = document.getElementById('filter-on')
+				const filterOff = document.getElementById('filter-off')
+				const systemActive = new Set()
+				const systemNonActive = new Set()
+				const wrapper_audio = document.querySelector('.wrapper_audio');
+				const audio = document.querySelector('.audio')
+				const resetButton = document.querySelector('.reset_button')
+				const preloader = document.querySelector('.preloader')
+				const logTextArea = document.querySelector('#log-area')
+				const logShowButton = document.querySelector('.log-show__button')
+				const logHiddenButton = document.querySelector('.log-hidden__button')
+				const logTextWrap = document.querySelector('.log-text__wrapper')
+
+				///////////////////////////////// раскрытие меню инструментов start////////////////////////////
+
+				document.querySelector('.btn__more').addEventListener('click', () => {
+
+					if (document.querySelector('.wrapper__1').classList.contains('open')) {
+						document.querySelector('.wrapper__1--container').style.height = "40px"
+						document.querySelector('.wrapper__1').classList.remove('open')
+						document.querySelector('.btn__more').classList.remove('btn_open')
+					} else {
+						/* document.querySelector('.wrapper__1--container').classList.add('wrapper__1--container_open') */
+						document.querySelector('.wrapper__1').classList.add('open')
+						document.querySelector('.btn__more').classList.add('btn_open')
+
+						if (document.querySelector('.log-text__wrapper').classList.contains('log-read__off')) {
+							document.querySelector('.wrapper__1--container').style.height = "160px"
+						} else {
+							document.querySelector('.wrapper__1--container').style.height = document.querySelector('.log-text__wrapper').offsetHeight + 80 + "px"
+						}
+					}
+				})
+				///////////////////////////////// раскрытие меню инструментов end////////////////////////////
+
+				/////////////////////////////////////////* notify start  *//////////////////////////////////
+
+				// Отображение уведомления
+				function showNotify(colorNotify, textNotify) {
+					document.querySelector('.notify_container').style.top = "0%";
+					document.querySelector('.notify').classList.remove("notify-green")
+					document.querySelector('.notify').classList.remove("notify-grey")
+					if (colorNotify == 'grey') {
+						document.querySelector('.notify').classList.add("notify-grey")
+					} else if (colorNotify == 'green') {
+						document.querySelector('.notify').classList.add("notify-green")
+					}
+					document.querySelector('.notify_status').innerHTML = textNotify
+				}
+
+				// Закрытие уведомления (действия при клике)
+				function notify_close() {
+					document.querySelector('.notify_container').style.top = "-100%";
+				}
+				document.querySelector('.notify').addEventListener('click', notify_close)
+
+				/////////////////////////////////////* notify end */////////////////////////////////////////
+
+				///////////////////////////////// KMU alert start////////////////////////////////////////
+				setUniqueKMU = new Set();		// Создаем множество для хранения уникальных значений КМУ
+				listKMU = new Map()		// Ассоциативный массив для хранения номера кму и кол-ва систем на этом КМУ
+				alarmListKMU = new Map()// Ассоциативный массив для хранения находящихся в аварии КМУ
+
+				function createKMUArrays() {
+					kmuNumbers.forEach(el => {
+						setUniqueKMU.add(el.innerText)
+					})
+
+					setUniqueKMU.forEach(item => {	//Перебираем множество и присваем ключам массивов значение = 0
+						listKMU.set(item, 0)
+						alarmListKMU.set(item, 0)
+					})
+
+					kmuNumbers.forEach(el => {		// Проходим по номерам КМУ
+						for (let pair of listKMU.entries()) {	//Проходим по массиву для хранения количества СП в КМУ
+							if (pair[0] == el.innerText) {					//При совпадении добавляем 1 
+								listKMU.set(pair[0], pair[1] + 1)
+							}
+						}
+					})
+				}
+
+				function setAlarmKMU(alarmListKMU, listKMU, numberKMU, kmuAlert) {
+					for (let pair of alarmListKMU.entries()) {	//Проходим по массиву в который записываем количество неисправных СП в КМУ
+						if (pair[0] == numberKMU.innerText) {				//pair[0]- ключ,pair[1] - его значение,  если нашел такой ключ и = номеру КМУ
+							alarmListKMU.set(pair[0], pair[1] += 1)	// то добавляем СП в несправные
+						}
+						if (pair[0] == numberKMU.innerText && listKMU.get(pair[0]) == alarmListKMU.get(pair[0])) { // Сравниваем ключ массива и номер КМУ ,а также массив с неисправными СП с общим количеством СП в КМУ
+							counterKMU.push(pair[0])			// При совпадении количества неисправных КМУ и общего кол-ва СП в КМУ добавляем имя ключа в массив с неисправными КМУ
+							const kmuAlertHTML = `<div class="kmu-alert">КМУ ${counterKMU.join(' ')} неисправно</div>`
+							if (kmuAlert) {
+								kmuAlert.remove() 	//Если такой блок существует, удаляем
+							}
+							kmuAlertContainer.insertAdjacentHTML('beforeend', kmuAlertHTML) // Отрисовываем новый div
+						}
+					}
+				}
+
+				function unsetAlarmKMU(alarmListKMU, listKMU, numberKMU, kmuAlert) {
+					for (let pair of alarmListKMU.entries()) {		//Проходим по массиву в который записываем количество неисправных СП в КМУ
+						if (pair[0] == numberKMU.innerText) {					//pair[0]- ключ,pair[1] - его значение,  если нашел такой ключ и = номеру КМУ
+							alarmListKMU.set(pair[0], pair[1] -= 1)		// то убираем СП из несправных
+						}
+						if (pair[0] == numberKMU.innerText && listKMU.get(pair[0]) != alarmListKMU.get(pair[0])) { // Сравниваем ключ массива и номер КМУ ,а также массив с неисправными СП с общим количеством СП в КМУ
+							myIndex = counterKMU.indexOf(pair[0]) // Находим его индекс в массиве
+							if (myIndex !== -1) {
+								counterKMU.splice(myIndex, 1)		// Убираем СП(имя ключа) из неисправных
+							}
+							const kmuAlertHTML = `<div class="kmu-alert">КМУ ${counterKMU.join(' ')} неисправно</div>`
+							if (kmuAlert && counterKMU.length != 0) {			// если имеются неисправные КМУ и dшм kmu-alert существует
+								kmuAlert.remove()			// Предварительно удаляю этот div
+								kmuAlertContainer.insertAdjacentHTML('beforeend', kmuAlertHTML)   // И отрисовываю новый
+							} else if (kmuAlert && counterKMU.length == 0) {		// Если массив с неисправными КМУ пуст то удаляю div
+								kmuAlert.remove()
+							}
+						}
+					}
+				}
+				createKMUArrays()
+				///////////////////////////////// KMU alert end////////////////////////////////////////
+
+				/////////////////////////////////// Обработка Ajax start///////////////////////////////
+				const counterKMU = []	// массив для хранения неисправных КМУ
+				setTimeout(() => {
+					setInterval(function () {
+						getPinInfo();
+					}, 5000);
+					function getPinInfo() {
+						var PinRequest = new XMLHttpRequest();
+						PinRequest.onreadystatechange = function () {
+							if (this.readyState == 4 && this.status == 200 && this.responseText != null) {
+								stateArray = [];			// В этот массив передаются данные о состоянии пинов
+								stateArray += this.responseText;
+								numbersOfSystems.forEach((el, index, arr) => {
+									let systemRow = el.closest('.table__item');
+									let numberSyst = systemRow.querySelector('.numberSystem')
+									let systemState = systemRow.querySelector('.state');
+									let numberKMU = systemRow.querySelector('.kmu-number')
+									let kmuAlert = document.querySelector('.kmu-alert')
+									let data = new Date();					//Дата для лог файла
+									let formatData = new Intl.DateTimeFormat("ru", { //Форматирование как нам надо
+										year: "numeric",
+										month: "long",
+										day: "numeric",
+										hour: "numeric",
+										minute: "numeric",
+										second: "numeric"
+									});
+									let logInfoRecovery = '';
+									let logInfoCrash = '';
+									if (stateArray[index] == 1) {		// Если СП в работе (данные с пина)
+										systemActive.add(el)
+										systemState.innerText = 'В работе';
+										systemState.classList.remove('state_on')
+										systemState.classList.remove('state_off')
+										systemState.classList.add('state_on')
+										systemState.dataset.sound = 'ready'
+										if (systemState.dataset.log == 'on') {
+											unsetAlarmKMU(alarmListKMU, listKMU, numberKMU, kmuAlert)			//Функция проверки аварии на КМУ
+											let logInfoRecovery = '{"type": "Восстановлено",' + '"numberSystem": ' + '"' + numberSyst.innerText + '"' + ',' + '"time": ' + '"' + formatData.format(data) + '"' + '},';
+											const recoveryInfoXHR = new XMLHttpRequest();
+											recoveryInfoXHR.open('POST', 'log_write', true);
+											recoveryInfoXHR.send(logInfoRecovery);			// Отправляем сообщение о воостановлении в log на сервер
+											systemState.dataset.log = 'ready';
+										}
+									} else if (stateArray[index] == 0) {
+										systemNonActive.add(el);
+										systemState.innerText = 'Авария!';
+										systemState.classList.remove('state_on')
+										systemState.classList.remove('state_off')
+										systemState.classList.add('state_off')
+										if (systemState.dataset.sound == 'ready') {
+											audio.play()				//Звук при аварии
+											showNotify('red', 'АВАРИЯ!!!')		//Уведомление об аварии
+											systemState.dataset.sound = 'on'
+										}
+										if (systemState.dataset.log == 'ready') {
+											setAlarmKMU(alarmListKMU, listKMU, numberKMU, kmuAlert)				//Функция проверки аварии на КМУ
+											const crashInfoXHR = new XMLHttpRequest();
+											let logInfoCrash = '{"type": "Авария",' + '"numberSystem":' + '"' + numberSyst.innerText + '"' + ',' + '"time": ' + '"' + formatData.format(data) + '"' + '},';
+											crashInfoXHR.open('POST', 'log_write', true);
+											crashInfoXHR.send(logInfoCrash);		// Отправляем сообщение об аварии в log на сервер
+											systemState.dataset.log = 'on';
+										}
+									}
+								});
+								popupState.forEach((el, index, arr) => {			//Отображение состояния в popup
+									if (stateArray[index] == 0) {
+										el.querySelector('p').innerText = 'Норма';
+										el.classList.remove('state_on')
+										el.classList.remove('state_off')
+										el.classList.add('state_on')
+									} else if (stateArray[index] == 1) {
+										el.querySelector('p').innerText = 'Авария!';
+										el.classList.remove('state_on')
+										el.classList.remove('state_off')
+										el.classList.add('state_off')
+									}
+								});
+							}
+						};
+						if (systemNonActive.size == 0) { 	//Если все системы в работе то звук и попап отключаются
+							audio.pause();
+							notify_close();
+						}
+						PinRequest.open("GET", "readPinInfo", true);
+						PinRequest.send();
+						filterState();
+						systemActive.clear();
+						systemNonActive.clear();
+					}
+					getPinInfo()
+				}, 5000)
+
+				/////////////////////////////////// Обработка Ajax end////////////////////////////////////////
+
+				///////////////////////////////// Звуковая сигнализация start/////////////////////////////////
+
+				function resetSound() {
+					resetButton.addEventListener('click', () => {
+						audio.pause()
+						notify_close();
+						state.forEach(el => {
+							if (el.innerText == 'Авария!') {
+								el.dataset.sound = 'off'
+							}
+						});
+					})
+				}
+
+				function MuteSound() {
+					document.querySelector('#audio').muted = false;
+					wrapper_audio.addEventListener('click', function () {
+						wrapper_audio.classList.toggle('off')
+						document.querySelector('audio').muted = !document.querySelector('audio').muted;
+					})
+				}
+				resetSound()
+				MuteSound()
+
+				///////////////////////////////// Звуковая сигнализация end///////////////////////////////////
+
+				////////////////////////////////////// Popup start///////////////////////////////////////////
+
+				let ssystem = document.querySelectorAll('.table__grid');
+
+				function popup() {
+					// Отображение и скрытие попапа
+					ssystem.forEach(function (item) {
+						item.addEventListener('click', function () {
+							let popup = item.querySelector('.popup')
+							let width_position = (document.documentElement.clientWidth - popup.offsetWidth) / 2
+							let height_position = document.documentElement.scrollTop + 100
+
+							popupBG.classList.add('popup__bg--on')
+							popup.classList.add('popup__on')
+
+							popup.style.top = height_position + "px"
+							popup.style.left = width_position + "px"
+							document.querySelector('body').style.overflowY = "hidden"
+
+							let popupClose = item.querySelector('.close')
+							popupClose.addEventListener('click', (event) => {
+								event.stopPropagation()
+								popupBG.classList.remove('popup__bg--on')
+								popup.classList.remove('popup__on')
+								document.querySelector('body').style.overflowY = "visible"
+							}
+							)
+						})
+					})
+				}
+				popup()
+				/////////////////////////////////////// Popup end////////////////////////////////////////////
+
+				////////////////////////////////////// Filters start///////////////////////////////////////////
+
+				///////////////////////////// Фильтр поиск start/////////////////////////////////
+				function filter(ev) {
+					ev.preventDefault()
+					const input = document.querySelector('#system-search')
+					if (Number(input.value)) {
+						let inputValue = input.value.replace(/\D/g, '') // Получает только цифры введенные в поле поиска
+						numbersOfSystems.forEach((item) => {
+							let numberSystem = item.innerHTML // Получаем номер системы
+							let parentNumber = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (numberSystem.includes(inputValue)) {
+								parentNumber.classList.add('.show_search')
+								parentNumber.classList.remove('.hidden_search')
+							} else {
+								parentNumber.classList.add('hidden_search')
+								parentNumber.classList.remove('show_search')
+							}
+						})
+					} else {
+						let inputValue = input.value.replace(/\d/g, '') // Получает только цифры введенные в поле поиска
+						correspondents.forEach((item) => {
+							let correspondent = item.innerHTML.toLowerCase() // Получаем корреспондента
+							let parentCorrespondent = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (correspondent.includes(inputValue.toLowerCase())) {
+								parentCorrespondent.classList.add('.show_search')
+								parentCorrespondent.classList.remove('.hidden_search')
+							} else {
+								parentCorrespondent.classList.add('hidden_search')
+								parentCorrespondent.classList.remove('show_search')
+							}
+						})
+					}
+				}
+				function filterReset() {
+					const input = document.querySelector('#system-search')
+					numbersOfSystems.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+					correspondents.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+				}
+
+				form.addEventListener('keyup', filter)
+				form.addEventListener('keyup', filterReset)
+				///////////////////////////// Фильтр поиск end/////////////////////////////////
+
+				//////////////////////////// Фильтры состояния checkbox start//////////////////
+				function filterState() {
+
+					//Когда идут реквесты, каждый раз сбрасывает все классы
+					//И в зависимости от нажатой кнопки скрывает ненужное
+
+					const StateSet = new Set() // Множество для хранения состояния нажатых checkbox
+					if (filterOn.checked) {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+					} else if (filterOff.checked) {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+					}
+					if (filterOn.checked) {
+						systemNonActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							parentState.classList.add('hidden_check')
+						})
+					}
+					if (filterOff.checked) {
+						systemActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							parentState.classList.add('hidden_check')
+						})
+					}
+
+					//Здесь все завязано на кнопку "В работе", в соответствии с нажатой кнопкой скрывает ненужное
+					//Когда отжал кнопку, возвращает
+
+					filterOn.addEventListener('click', () => {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+						systemNonActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							if (filterOn.checked) {
+								parentState.classList.add('hidden_check')
+								StateSet.add(1)   			//при нажатии на On добавляем 1 в множество
+							} else if (filterOn.checked === false) {
+								parentState.classList.remove('hidden_check')
+								StateSet.delete(1)			//при отжатии убираем 1 из множестваа
+							}
+							if (StateSet.size == 2) { // При одновременном нажатии двух checkbox, сбрасывает их
+								system.forEach((el) => {
+									let parentState = el.closest('.table__grid')
+									parentState.classList.remove('hidden_check')
+								})
+								if (filterOn.checked && filterOff.checked) {
+									filterOn.checked = false
+									filterOff.checked = false
+								}
+								StateSet.clear()
+							}
+						})
+					})
+					//Здесь все завязано на кнопку "Авария", в соответствии с нажатой кнопкой скрывает ненужное
+					//Когда отжал кнопку, возвращает
+					filterOff.addEventListener('click', () => {
+						system.forEach((e) => {
+							e.classList.remove('hidden_check')
+						})
+						systemActive.forEach((el) => {
+							let parentState = el.closest('.table__grid')
+							if (filterOff.checked) {
+								parentState.classList.add('hidden_check')
+								StateSet.add(2)
+							} else if (filterOff.checked === false) {
+								parentState.classList.remove('hidden_check')
+								StateSet.delete(2)
+							}
+							if (StateSet.size == 2) { // При одновременном нажатии двух checkbox, сбрасывает их
+								system.forEach((el) => {
+									let parentState = el.closest('.table__grid')
+									parentState.classList.remove('hidden_check')
+								})
+								if (filterOn.checked && filterOff.checked) {
+									filterOn.checked = false
+									filterOff.checked = false
+								}
+								StateSet.clear()
+							}
+						})
+					})
+				}
+				//////////////////////////// Фильтры состояния checkbox end//////////////////
+
+				////////////////////////////////////// Filters end///////////////////////////////////////////
+
+				////////////////////////////////////// Чтение лог файла start///////////////////////////////////////////
+
+				async function readLog() {
+					let response = await fetch('/log.xml')
+					if (response.ok) {
+						//присваиваем значение массива переменной
+						let logText = await response.text() // Распарсили в текст
+						let logTextCorrect = logText.slice(0, -1); //Убрали лишнюю запятую
+						logTextCorrect += "]"
+						let logArray = JSON.parse(logTextCorrect)
+						//теперь передаем этоту переменную с массивом в другую функцию
+						renderLog(logArray)
+					} else if (response.status == 404) {
+						showNotify('grey', 'Лог файл пуст');
+					}
+				}
+
+				function renderLog(logArray) {					// Отрисовываем лог в браузере
+					logTextArea.innerHTML = '';
+					logArray.forEach(function (item) {
+						const logHTML = `${item.type}: Система передачи - ${item.numberSystem} Время: ${item.time}\n`
+						logTextArea.insertAdjacentHTML('beforeend', logHTML)
+					})
+				}
+
+
+				logShowButton.addEventListener('click', () => {
+					logTextWrap.classList.toggle('log-read__off')
+					document.querySelector("#log-area").classList.toggle('log-read__off')
+					if (!logTextWrap.classList.contains('log-read__off')) {
+						document.querySelector('.wrapper__1--container').style.height = logTextWrap.offsetHeight + 80 + 'px';
+						document.querySelectorAll(".instruments__btn").forEach(function (el) {
+							el.style.backgroundColor = "black"
+						})
+						logShowButton.style.backgroundColor = "rgba(50, 51, 56, 1)"
+						readLog()
+					} else {
+						document.querySelector('.wrapper__1--container').style.height = 160 + 'px';
+						logShowButton.style.backgroundColor = "black"
+					}
+				})
+
+				////////////////////////////////////// Чтение лог файла end///////////////////////////////////////////
+				///////////////////////////////////////////MAIN-end////////////////////////////////////////////////
+			}
+
+			////////////////////////////////////////RENDER_SYSTEMS-start/////////////////////////////////////
+			const systemsContainer = document.querySelector('#table-systems');
+
+			getSystems()
+
+			async function getSystems() {
+				//получаем массив из json в котором мы определили массив
+				//обязательно через await,необходимо достоверно получить данные
+				const response = await fetch('/sis.jso')
+				//присваиваем значение массива переменной
+				let systemsArray = await response.json()
+				if (response.ok) {
+					systemsArray.sort(function (obj1, obj2) {		//предварительно сортирую массив,чтобы при редактировании нормально строилась таблица
+						return obj1.pin - obj2.pin
+					})
+					localStorage.setItem('systemsArray', JSON.stringify(systemsArray)) //Если получили данные, то добавляем в LocalStorage
+				}
+			}
+
+			function mainFunction() {
+				let systemsArray = []
+				if (localStorage.getItem('systemsArray')) {
+					systemsArray = JSON.parse(localStorage.getItem('systemsArray'))//Вытягиваем из localStorage sis.json и передаем в функции
+					renderSystems(systemsArray)
+					renderSp(systemsArray);
+					scriptAfterLoad()
+
+				}
+			}
+			const wrapCont = document.querySelector('.wrapper__1')
+
+			function renderSystems(systemsArray) {
+				//перебираем все элементы в массиве и вставляем их в шаблон
+				let payloadListCounter = 0
+				let popupReserveCounter = 0
+				systemsArray.forEach(function (item) {
+					const systemHTML =
+						`<div class="table__grid" id="${item.id}">
+							<div class="table__item">
+								<div class="row-number">${item.pin}</div>
+								<div class="kindSystem">${item.kind}</div>
+								<div class="numberSystem">${item.numberSystem}</div>
+								<div class="priority">${item.priority}</div>
+								<div class="correspondent">${item.correspondent}</div>
+								<div class="kmu-number">${item.kmu}</div>
+								<div class='type'>${item.type}</div>
+								<div class="state" data-sound="ready" data-log="ready"></div>
+							</div>
+						<div class="popup__wrapper">
+							<div class="popup">
+								<div class="popup__header">
+									<div style="margin-left:27px; font-size:1em;"> ☆ Система передач №:${item.numberSystem}																
+									</div>
+									<div class="close">
+											<div></div>
+											<div></div>
+									</div>
+								</div>
+								
+								<div class="popup__content">
+									<div class="popup__state"><p style="margin:20px 0px 20px 0px;font-size:1.2em;">Состояние:</p></div>
+									<div class="popup__content-down" style="text-align: start;">
+										<h3 style="margin-bottom:10px;font-size:1.2em;">Загрузка:</h3> 
+										<div class = payload__list${payloadListCounter} style="max-height: 40vh;font-size:1.2vw;display:flex;flex-direction: column;flex-wrap: wrap;align-content: space-between;">
+										</div>	
+									</div>
+									<div class="popup__reserve popup__reserve${popupReserveCounter}">
+										<p style="margin:10px 0;font-size:1.1em;">Вариант резервирования:</p>
+										<select class="reserve" style="font-size:1em;">
+										</select>
+										<div class="pic-trace">
+											<div class="circle"></div>
+											<div class="trase_line">
+												<p class="KMU"></p>
+												<p class="HF-pair"></p>
+											</div>
+											<div class="circle"></div>
+											<div class="trase_line">
+												<p class="KMU"></p>
+												<p class="HF-pair"></p>
+											</div>
+											<div class="circle"></div>
+											<div class="trase_line">
+												<p class="KMU"></p>
+												<p class="HF-pair"></p>
+											</div>
+											<div class="circle"></div>	
+											<div class="length" style="visibility:hidden"></div>		
+										</div>
+									</div>
+							</div>	
+						</div>`
+
+					//вставляем шаблон в страницу(отрисовываем)
+					systemsContainer.insertAdjacentHTML('beforeend', systemHTML)
+
+					const payloadList = document.querySelector(`.payload__list${payloadListCounter}`)			//Автоматический рендер Payloads
+					counterPayload = 0
+					const elementPayloads = item.payloads[counterPayload]
+					for (const key in elementPayloads) {
+						let payloadSP = elementPayloads[key]
+						let payloadSPHTML = `<div class = "SP-payload" style = "margin:2px 0px;max-width:35%;word-wrap:break-word;">${payloadSP}</div>`
+						payloadList.insertAdjacentHTML('beforeend', payloadSPHTML)
+						counterPayload += 1
+					}
+					payloadListCounter += 1
+
+					let popupReserve = document.querySelector(`.popup__reserve${popupReserveCounter}`)		//Автоматический рендер резервных трасс
+					NumberVariantList = popupReserve.querySelector('.reserve')
+					for (let index = 0; index < item.trases.length; index++) {
+						let element = item.trases[index];
+						if (index != 0) {
+							let NumberVariantHTML = `<option value="${index}">${element.numberVariant}</option>`
+							NumberVariantList.insertAdjacentHTML('beforeend', NumberVariantHTML)
+						} else {
+							let NumberVariantHTML = `<option value="${index}" selected>${element.numberVariant}</option>`
+							NumberVariantList.insertAdjacentHTML('beforeend', NumberVariantHTML)
+						}
+					}
+					popupReserveCounter += 1
+				})
+			}
+
+			//////////////////////////)/RENDER_SYSTEMS-end/////////////////////////////////////
+
+			///////////////////////////////////////render-trases-START/////////////////////////////////////
+			let val = 0
+			function renderSp(systemsArray) {
+				const SPelements = document.querySelectorAll('.table__grid');
+				SPelements.forEach(function (SPelement, index) {
+					renderTrases(systemsArray[index].trases, 0, index)
+
+					SPelement.addEventListener('click', (e) => {
+						const parent = e.target.closest('.table__grid')
+						const SP__id = parent.getAttribute('id');
+						const SP = systemsArray.find((val) => {
+							if (val.id === Number(SP__id)) return val;
+						});
+						parent.querySelector('.pic-trace');
+						let select_form = parent.querySelectorAll('.reserve');
+						select_form.forEach((option) => {
+							option.addEventListener('change', (e) => {
+								val = Number(e.target.value);
+								renderTrases(SP.trases, val, SP__id);
+							});
+						});
+					})
+				});
+			}
+
+			function renderTrases(traseArray, traseNumber, SP__id) {
+				const trase = traseArray[traseNumber];
+				const nodes = Object.values(trase.nodes);
+				const lines = Object.values(trase.lines);
+				const pairs = Object.values(trase.pairs);
+				const wrapper = document.createElement('div');
+				const picTrace = document.querySelectorAll('.pic-trace')
+				const picTraceEl = Array.from(picTrace)
+				wrapper.classList.add('pic-trace')
+				nodes.forEach((node, i) => {
+					const circleEl = document.createElement('div');
+					circleEl.classList.add('circle');
+					circleEl.textContent = nodes[i];
+					wrapper.append(circleEl);
+					if (i !== nodes.length - 1) {
+						const innerHTML = `
+							<div class="trase_line" style="z-index:9999;" >
+								<p class="KMU">${lines[i]}</p>
+								<p class="HF-pair">${pairs[i]}</p>
+							</div>`;
+						wrapper.insertAdjacentHTML('beforeend', innerHTML)
+					}
+				})
+				picTraceEl[Number(SP__id)].replaceWith(wrapper)
+			}
+			///////////////////////////////////////render-trases-END/////////////////////////////////////
+			// Go()
+			// mainFunction()
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 30 30"
+   version="1.1"
+   sodipodi:docname="reset_undo.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   width="30"
+   height="30"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="13.015625"
+     inkscape:cx="51.707083"
+     inkscape:cy="18.40096"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="1591"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <title
+     id="title11">reset-undo-arrow</title>
+  <path
+     d="m 20.602104,4.9848787 a 12.793296,12.555516 54.369314 0 1 4.77809,4.7191103 l -0.0172,-7.0786603 a 0.28268844,0.27743434 54.36927 0 1 0.27933,-0.2762 l 1.23374,0.0183 a 0.28378413,0.27850967 54.369312 0 1 0.27966,0.28649 l 0.0239,10.2432703 a 0.28323628,0.277972 54.36932 0 1 -0.29972,0.27624 l -10.15639,-0.90215 a 0.28323628,0.277972 54.36932 0 1 -0.25975,-0.30481 l 0.0884,-1.23766 a 0.28378413,0.27850967 54.369312 0 1 0.2989,-0.25606 l 7.27777,0.64882 A 10.948151,10.744666 54.369349 0 0 12.338684,5.3132187 c -5.8344403,1.12311 -9.5876903,6.8288503 -8.3675903,12.7188903 1.22009,5.89005 6.9587003,9.76862 12.7931403,8.64549 a 10.922949,10.719934 54.369365 0 0 6.32478,-3.86123 0.28268844,0.27743434 54.36927 0 1 0.38679,-0.0472 l 0.99292,0.75425 a 0.28378413,0.27850967 54.369312 0 1 0.0559,0.40018 12.757685,12.520569 54.36939 1 1 -3.92273,-18.9370203 z"
+     id="path13"
+     style="fill:#a8a2a2;fill-opacity:1;stroke:#a8a2a2;stroke-width:0.954;stroke-dasharray:none;stroke-opacity:1" />
+  <metadata
+     id="metadata1383">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>reset-undo-arrow</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

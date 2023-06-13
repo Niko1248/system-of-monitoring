@@ -1,0 +1,1530 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Система мониторинга</title>
+		<link rel="stylesheet" href="/admstyle.css">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="notify_container">
+			<div class="notify">
+				<p class="notify_status"></p>
+			</div>
+		</div>
+
+		<div class="aut_container">
+			<form class="aut_form">
+				<div class="animation_load">
+					<div class="animation_load-line"></div>
+				</div>
+				<h2>Войдите в систему</h2>
+				<input type="text" id="login" placeholder="Логин" disabled>
+				<input type="password" id="password" placeholder="Пароль" disabled>
+				<button id="aut_btn" class='join-btn__disable' disabled>Идёт загрузка</button>
+			</form>
+		</div>
+
+		<header>
+			<main>
+				<div class="logo">
+					<div class="b1">M</div>
+					<p>ониторинг</p>
+				</div>
+				<div class="user">
+					<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+							fill="#2A4157" fill-opacity="0.24" />
+						<circle cx="12" cy="10" r="4" fill="#222222" />
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							d="M18.2209 18.2462C18.2791 18.3426 18.2613 18.466 18.1795 18.5432C16.5674 20.0662 14.3928 21 12 21C9.60728 21 7.43264 20.0663 5.82057 18.5433C5.73877 18.466 5.72101 18.3427 5.77918 18.2463C6.94337 16.318 9.29215 15 12.0001 15C14.7079 15 17.0567 16.3179 18.2209 18.2462Z"
+							fill="#222222" />
+					</svg>
+					<p id="ueser_status">Admin</p>
+				</div>
+			</main>
+		</header>
+
+		<div class="top_container">
+			<div class="wrapper__1--stiky">
+				<div class="wrapper__1--container">
+					<div class="btn__more">
+						Инструменты
+						<p style="display: flex;"></p>
+					</div>
+
+					<div class="wrapper__1">
+						<div class="instruments">
+							<form class="search-form" action="" method="">
+								<label hidden for="system-search">Фильтр</label>
+								<input placeholder="Поиск..." type="search" name="system-search" id="system-search"
+									class="system-search">
+								<script>
+									document.querySelector('#system-search').addEventListener('keydown', function (e) {
+										if (e.keyCode === 13) {
+											event.preventDefault()
+										}
+									})
+								</script>
+							</form>
+							<div class="instruments__container">
+								<div class="instruments__menu">
+									<div class="instruments__btn log-show__button">
+										Показать log
+									</div>
+									<div class="instruments__btn log-remove__button">
+										Удалить log
+									</div>
+									<div class="instruments__btn add-SP__btn">
+										Добавить СП
+									</div>
+									<div class='send-system__btn instruments__btn'>Отправить на сервер</div>
+									<div class="instruments__btn change-index__btn">
+										Редактировать client
+									</div>
+									<div class="instruments__btn refresh">
+                    Обновить
+                  </div>
+								</div>
+								<div class="log-text__wrapper log-read__off">
+									<textarea name="log-area" id="log-area" cols="60" rows="10" readonly></textarea>
+								</div>
+								<div class="wrapper_change_client" style="display: none;">
+									<div class="container_btn_choose_login">
+										<div class="index-htm index-admin">admin</div>
+										<div class="index-htm index-user">user</div>
+									</div>
+
+									</p>
+									<form class="form_change_client" method="post">
+										<textarea id="index-text" class="client_area"></textarea>
+										<button class="instruments__btn" type="submit" id="index-submit">загрузить
+											изменения</button>
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="main">
+				<div class="wrapper">
+					<div class="table" id="table-systems">
+						<div class="table__title">
+							<div>№ Пин</div>
+							<div>Вид СП</div>
+							<div>Система передачи</div>
+							<div>Приоритет</div>
+							<div>Корреспондент</div>
+							<div>КМУ</div>
+							<div>Тип трассы</div>
+						</div>
+					</div>
+					<div class="popup__bg">
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer id="footer" style="width: 100%; margin: 0 auto; text-align: center; font-size: 0.7em;">
+			<p>© Центр связи стационарных узлов связи г.Чехов </p>
+			<p style="display: block; margin-top: 5px;">2023г.</p>
+		</footer>
+		<script>
+
+			////////////////////////////MAIN-start////////////////////////////////////////////////
+
+			////////////////////////////////Аутентификация/////////////////////
+			let password = document.querySelector('#password');
+			let login = document.querySelector('#login');
+			let key = ""
+			let joinBtn = document.querySelector('#aut_btn')
+			const y = document.querySelector('.instruments').offsetHeight
+
+			function Go() {
+				document.querySelector('.aut_container').classList.add('aut_close');
+				document.querySelector('body').style.overflowY = "visible";
+				document.querySelector('body').style.background = "1c1c1c";
+				document.querySelector('.top_container').classList.add('top_container--open');
+				document.querySelector('.animation_load').style.display = "none";
+				document.querySelector('.animation_load-line').style.display = "none";
+			}
+
+			function root_access(key) {//Функция отправки на сервер введенного логина и пароля, запуска основной функции при правильной комбинации 
+				let access = new XMLHttpRequest();
+				access.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200 && this.responseText != null) {
+						if (this.responseText == 'ok') {
+							document.querySelector('.animation_load').classList.add('animation_load--s')
+							document.querySelector('.animation_load-line').classList.add('animation_load-line--s')
+							mainFunction()
+							setTimeout(() => {
+								document.querySelector('.animation_load').style.opacity = 0;
+								document.querySelector('.animation_load-line').style.opacity = 0;
+							}, 3000)
+							setTimeout(() => {
+								Go()
+							}, 4000)
+							setTimeout(() => {
+								document.querySelector('.aut_container').style.display = "none";
+							}, 4500)
+
+						} else {
+							check_aut_animation()
+						}
+					};
+				}
+				access.open("POST", "get_access_admin", true);
+				access.send(key);
+			}
+
+			function check_aut_animation() {
+				document.querySelector('.animation_load').classList.add('animation_load--error')
+				document.querySelector('.animation_load-line').classList.add('animation_load-line--error')
+				setTimeout(() => {
+					document.querySelector('.animation_load--error').style.opacity = 1;
+					document.querySelector('.animation_load-line--error').style.opacity = 1;
+				}, 300)
+			}
+
+			joinBtn.addEventListener('click', function (event) {	// Слушатель на кнопку "Войти" + проверка на пустые строки в логине и пароле
+				event.preventDefault()
+				document.querySelector('.animation_load').classList.remove('animation_load--error')
+				document.querySelector('.animation_load-line').classList.remove('animation_load-line--error')
+				if (password.value.length == 0 || login.value == 0) {
+					check_aut_animation()
+				} else {
+					key = login.value.toLowerCase() + password.value
+					document.querySelector('.animation_load').style.opacity = 1;
+					setTimeout(() => {
+						root_access(key)
+					}, 4000)
+				}
+			})
+
+			document.addEventListener('DOMContentLoaded', () => {		//Активация полей Логин пароль и кнопки войти, только после полного построения DOM (т.к. CSS закэширован)
+				joinBtn.classList.remove('join-btn__disable')
+				joinBtn.classList.add('join-btn__enable')
+				login.disabled = false
+				password.disabled = false
+				joinBtn.disabled = false
+				joinBtn.innerText = 'Войти'
+			})
+			/////////////////////////////Аутентификация end/////////////////////
+
+			/* notify start */
+
+			// Отображение уведомления
+			function showNotify(colorNotify, textNotify) {
+				document.querySelector('.notify_container').style.top = "0%";
+				document.querySelector('.notify').classList.remove("notify-green")
+				document.querySelector('.notify').classList.remove("notify-grey")
+				if (colorNotify == 'grey') {
+					document.querySelector('.notify').classList.add("notify-grey")
+				} else if (colorNotify == 'green') {
+					document.querySelector('.notify').classList.add("notify-green")
+				}
+				document.querySelector('.notify_status').innerHTML = textNotify
+			}
+
+			// действия при клике
+			function notify_close() {
+				document.querySelector('.notify_container').style.top = "-100%";
+			}
+			document.querySelector('.notify').addEventListener('click', notify_close)
+
+			/* notify end */
+			////////////////////////////////////////RENDER_SYSTEMS-start/////////////////////////////////////
+			const systemsContainer = document.querySelector('#table-systems');
+
+			getSystems()
+			async function getSystems() {
+				//получаем массив из json в котором мы определили массив
+				//обязательно через await,необходимо достоверно получить данные
+				const response = await fetch('/sis.json')
+				//присваиваем значение массива переменной
+				const systemsArray = await response.json()
+				//теперь передаем этоту переменную с массивом в другую функцию
+				if (response.ok) {
+					systemsArray.sort(function (obj1, obj2) {		//предварительно сортирую массив,чтобы при редактировании нормально строилась таблица
+						return obj1.pin - obj2.pin
+					})
+					localStorage.setItem('systemsArray', JSON.stringify(systemsArray))//Если получили данные, то добавляем в LocalStorage
+				}
+			}
+
+			function mainFunction() {
+				let systemsArray = []
+				if (localStorage.getItem('systemsArray')) {
+					systemsArray = JSON.parse(localStorage.getItem('systemsArray'))//Вытягиваем из localStorage sis.json и передаем в функции
+					renderSystems(systemsArray)
+					editSP(systemsArray)
+					addSP(systemsArray)
+					removeSP(systemsArray)
+					scriptAfterLoad()
+					renderSp(systemsArray);
+				}
+			}
+
+			const wrapCont = document.querySelector('.wrapper__1')
+
+			function renderSystems(systemsArray) {
+				//перебираем все элементы в массиве и вставляем их в шаблон
+				let payloadListCounter = 0
+				let popupReserveCounter = 0
+				systemsArray.forEach(function (item) {
+					const systemHTML =
+						`<div class="table__grid" id="${item.id}">
+							<div class="table__item">
+								<div class="row-number">${item.pin}</div>
+								<div class="kindSystem">${item.kind}</div>
+								<div class="numberSystem">${item.numberSystem}</div>
+								<div class="priority">${item.priority}</div>
+								<div class="correspondent">${item.correspondent}</div>
+								<div class="kmu-number">${item.kmu}</div>
+								<div class='type'>${item.type}</div>
+								<div class="btn_edit">
+									<svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+										width="20px" height="20px" viewBox="0 0 494.936 494.936" 
+										xml:space="preserve">
+									<g>
+										<g>
+											<path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157
+												c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21
+												s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741
+												c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"/>
+											<path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069
+												c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963
+												c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692
+												C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107
+												l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005
+												c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"/>
+										</g>
+									</g>
+									</svg>
+								</div>
+								<div class="btn_delete">&#10006</div>
+							</div>
+						<div class="popup__wrapper">
+							<div class="popup">
+								<div class="popup__header">
+									<div style="margin-left: 20px;">Система передач №:${item.numberSystem}																
+									</div>
+									<div class="close">
+											<div></div>
+											<div></div>
+									</div>
+								</div>
+								
+								<div class="popup__content">
+									<div class="popup__content-down" style="text-align: start;">
+										<h3 style="margin-bottom:10px;font-size:1.2em;">Загрузка:</h3> 
+										<div class = payload__list${payloadListCounter} style="max-height: 40vh;font-size:1.2vw;display:flex;flex-direction: column;align-content: space-between;flex-wrap: wrap;">
+										</div>		
+									</div>
+									<div class="popup__reserve popup__reserve${popupReserveCounter}">
+										<p style="margin:10px 0;font-size:1.1em;">Вариант резервирования:</p>
+										<select class="reserve" style="font-size:1em;">
+										</select>
+										<div class="pic-trace">
+											<div class="circle"></div>
+											<div class="trase_line">
+												<p class="KMU"></p>
+												<p class="HF-pair"></p>
+											</div>
+											<div class="circle"></div>
+											<div class="trase_line">
+												<p class="KMU"></p>
+												<p class="HF-pair"></p>
+											</div>
+											<div class="circle"></div>
+											<div class="trase_line">
+												<p class="KMU"></p>
+												<p class="HF-pair"></p>
+											</div>
+											
+											<div class="circle"></div>	
+											<div class="length" style="visibility:hidden"></div>		
+										</div>
+									</div>
+						</div>`
+
+					//вставляем шаблон в страницу(отрисовываем)
+					systemsContainer.insertAdjacentHTML('beforeend', systemHTML)
+
+					const payloadList = document.querySelector(`.payload__list${payloadListCounter}`)		//Автоматический рендер Payloads
+					counterPayload = 0
+					const elementPayloads = item.payloads[counterPayload]
+					for (const key in elementPayloads) {
+						let payloadSP = elementPayloads[key]
+						let payloadSPHTML = `<div class = "SP-payload" style = "margin:2px 0px;max-width:35%;word-wrap:break-word;">${payloadSP}</div>`
+						payloadList.insertAdjacentHTML('beforeend', payloadSPHTML)
+						counterPayload += 1
+					}
+					payloadListCounter += 1
+					let popupReserve = document.querySelector(`.popup__reserve${popupReserveCounter}`)		//Автоматический рендер резервных трасс
+					NumberVariantList = popupReserve.querySelector('.reserve')
+					for (let index = 0; index < item.trases.length; index++) {
+						let element = item.trases[index];
+						if (index != 0) {
+							let NumberVariantHTML = `<option value="${index}">${element.numberVariant}</option>`
+							NumberVariantList.insertAdjacentHTML('beforeend', NumberVariantHTML)
+						} else {
+							let NumberVariantHTML = `<option value="${index}" selected>${element.numberVariant}</option>`
+							NumberVariantList.insertAdjacentHTML('beforeend', NumberVariantHTML)
+						}
+					}
+					popupReserveCounter += 1
+				})
+			}
+			//////////////////////////)/RENDER_SYSTEMS-end/////////////////////////////////////
+
+			///////////////////////////////////////render-trases-START/////////////////////////////////////
+
+			let val = 0
+			function renderSp(systemsArray) {
+				const SPelements = document.querySelectorAll('.table__grid');
+				SPelements.forEach(function (SPelement, index) {
+					renderTrases(systemsArray[index].trases, 0, index)
+
+					SPelement.addEventListener('click', (e) => {
+						const parent = e.target.closest('.table__grid')
+						const SP__id = parent.getAttribute('id');
+
+						const SP = systemsArray.find((val) => {
+							if (val.id === Number(SP__id)) return val;
+						});
+						parent.querySelector('.pic-trace');
+						let select_form = parent.querySelectorAll('.reserve');
+						select_form.forEach((option) => {
+							option.addEventListener('change', (e) => {
+								val = Number(e.target.value);
+								renderTrases(SP.trases, val, Number(SP__id));
+							});
+						});
+					})
+				});
+
+			}
+
+			function renderTrases(traseArray, traseNumber, SP__id) {
+				const trase = traseArray[traseNumber];
+				const nodes = Object.values(trase.nodes);
+				const lines = Object.values(trase.lines);
+				const pairs = Object.values(trase.pairs);
+				const wrapper = document.createElement('div');
+
+				wrapper.classList.add('pic-trace')
+				const picTrace = document.querySelectorAll('.pic-trace')
+				const picTraceEl = Array.from(picTrace)
+
+				nodes.forEach((node, i) => {
+					const circleEl = document.createElement('div');
+					circleEl.classList.add('circle');
+					circleEl.textContent = nodes[i];
+
+					wrapper.append(circleEl);
+
+					if (i !== nodes.length - 1) {
+						const innerHTML = `
+							<div class="trase_line" style="z-index:9999;" >
+								<p class="KMU">${lines[i]}</p>
+								<p class="HF-pair">${pairs[i]}</p>
+							</div>`;
+
+						wrapper.insertAdjacentHTML('beforeend', innerHTML)
+					}
+
+
+					picTraceEl[Number(SP__id)].replaceWith(wrapper)
+
+				})
+			} 
+
+			///////////////////////////////////////render-trases-END/////////////////////////////////////
+
+			function btn_black() {
+				document.querySelectorAll(".instruments__btn").forEach(function (el) {
+					el.style.backgroundColor = "black"
+				})
+			}
+
+			///////////////////////////////////////Добавление СП в JSON start////////////////////////////
+			function addSP(systemsArray) {
+				const addSpBtn = document.querySelector('.add-SP__btn')
+				addSpBtn.addEventListener('click', () => {
+					addSpBtn.classList.toggle('addSpBtn--open')
+					//удаляем окно редактирования СП,если оно открыто
+					if (document.querySelector('.edit-sp__container')) {
+						document.querySelector('.edit-sp__container').remove();
+					}
+					//при повторном нажатии на кнопку закрываем окно
+
+
+					const addSpContainer = document.querySelector('.add-sp__container')
+					btn_black()
+					//закрываю окно редактирования клиета
+					const btn_chenge_client = document.querySelector('.change-index__btn');
+					document.querySelector('.wrapper_change_client').style.display = "none";
+					btn_chenge_client.classList.remove('btn_chenge_client--open');
+					btn_chenge_client.style.backgroundColor = "black";
+
+
+					addSpBtn.style.backgroundColor = "rgba(50, 51, 56, 1)";
+
+					document.querySelector('.log-text__wrapper').classList.add('log-read__off')
+
+					createFormAddSP(addSpContainer, addSpBtn)
+					const addSystemInArrayBtn = document.querySelector('.add-system__btn')
+					addSystemInArrayBtn.addEventListener('click', () => {
+						let allFormSp = document.querySelectorAll('.sp-form')
+						for (let index = 0; index < allFormSp.length; index++) {		//Проверка на заполнение всех input
+							const el = allFormSp[index];
+							if (el.checkValidity() === true && index + 1 != allFormSp.length) {
+								continue
+							} else if (el.checkValidity() === true && index + 1 == allFormSp.length) {
+								addSystemInArray(systemsArray)
+							} else if (el.checkValidity() === false) {
+								showNotify('red', 'Заполнены не все поля')
+								break
+							}
+						}
+					})
+					if (document.querySelector('.wrapper__1--container').querySelector('.add-sp__container')) {
+						const z = document.querySelector('.add-sp__container').offsetHeight
+						document.querySelector('.wrapper__1--container').style.height = 75 + y + z + "px";
+					} else {
+						document.querySelector('.wrapper__1--container_open').style.height = "425px";
+						document.querySelector('.wrapper__1--container_open').classList.add('more-more');
+					}
+					if (!addSpBtn.classList.contains('addSpBtn--open')) {
+						document.querySelector('.add-sp__container').remove()
+						document.querySelector('.wrapper__1--container').style.height = 80 + "px";
+					}
+				})
+
+				const sendSystemBtn = document.querySelector('.send-system__btn')
+				sendSystemBtn.addEventListener('click', () => {
+					sendJSON(systemsArray)
+				})
+			}
+
+			function createFormAddSP(addSpContainer, addSpBtn) {					//Функция создания начальной формы по нажатию на кнопку "Добавить СП"
+				const addSpHTML = `<div class="add-sp__container">
+							<div class="add-sp__main">
+								<div class="main__title">Основная информация</div>
+								<form class='main__form sp-form' id='addSpMainForm'>
+									<input class = 'form-input' type="text" name="№" id="numberPin" placeholder="Введите номер Pin"  required>
+									<select class = 'form-select' id="inputKind" required>
+										<option value='' selected disabled hidden>Выберите вид СП</option>
+										<option value='ТТ'>ТТ</option>
+										<option value='ВЧ'>ВЧ</option>
+										<option value='Цифровая'>Цифровая</option>
+									</select>
+									<input class = 'form-input' type="text" name="Система передачи" id="numberSP" placeholder="Введите номер СП" required>
+									<select class = 'form-select' id="inputPriority" required>
+										<option value='' selected disabled hidden>Выберите приоритет</option>
+										<option value='Обыкновенный'>Обыкновенный</option>
+										<option value='Особо важная'>Особо важная</option>
+									</select>
+									<input class = 'form-input' type="text" name="Корреспондент" id="correspondent" placeholder="Введите корреспондента" required>
+									<input class = 'form-input' type="text" name="КМУ" id="numberKMU" placeholder="Введите номер КМУ" required>
+									<select class = 'form-select' id = "inputType" required> 
+										<option value='' selected disabled hidden>Выберите тип СП</option>
+										<option value='Аналоговая'>Аналоговая</option>
+										<option value='Цифровая'>Цифровая</option>
+									</select>
+								</form>
+							</div>
+							<div class="add-sp__payload">
+								<div class="payload__container">
+									<div class="payload__title">Загрузка системы</div>
+									<div class="add-payload__btn more">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-payload__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</div>	
+								<form class='payload__form sp-form' id='addSpPayloadForm'>
+									<input class = 'input-payload form-input' placeholder="Условный номер связи : наименование" required>
+								</form>
+							</div>
+							<div class="add-sp__reserve">
+								<div class="reserve__container">
+									<div class="reserve__title">Варианты резервирования</div>
+									<div class="add-reserve__btn more">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-reserve__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</div>
+								<form class='reserve__form reserveVariant1 sp-form'>
+									<input class = 'input-reserve form-input name-variant' type="text" value="Основная трасса" required>
+									<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+									<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+									<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>
+									<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+									<div class="add-reserve-part__btn more">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-reserve-part__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</form>		
+							</div>
+							<div class='add-sp__buttons'>
+								<div class='add-system__btn instruments__btn'>Добавить систему</div>
+							</div>
+						</div>`
+				let editSpContainer = document.querySelector('.edit-sp__container')
+				addSpContainer = document.querySelector('.add-sp__container')
+				if (editSpContainer) {				//Проверка на наличие уже открытых форм добавления или редактирования
+					editSpContainer.remove()
+				} else if (addSpContainer) {
+					addSpContainer.remove()
+				}
+				wrapCont.insertAdjacentHTML('beforeend', addSpHTML)
+				const addPayloadBtn = document.querySelector('.add-payload__btn');
+				const addReserveVariant = document.querySelector('.add-reserve__btn')
+				const addPartOfReserveBtn = document.querySelectorAll('.add-reserve-part__btn')
+				const removePayloadBtn = document.querySelector('.remove-payload__btn')
+				const removeReserveVariantBtn = document.querySelector('.remove-reserve__btn')
+				const removePartOfReserveBtn = document.querySelector('.remove-reserve-part__btn')
+				let inputNumberPin = document.querySelector('#numberPin')
+
+				inputNumberPin.addEventListener('keydown', checkInput)			//Блокировака всех кнопок кроме цифр в данных input
+
+				createInputPayload(addPayloadBtn)
+				removeInputPayload(removePayloadBtn)
+				createInputReserveVariant(addReserveVariant, addPartOfReserveBtn, removePartOfReserveBtn)
+				removeInputReserveVariant(removeReserveVariantBtn)
+				removePartOfReserveBtn.addEventListener('click', removePartOfReserve)
+
+			}
+
+			function checkInput(event) {				//Функция блокировки всех кнопок кроме цифровых
+				if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 ||
+					// Разрешаем: Ctrl+A
+					(event.keyCode == 65 && event.ctrlKey === true) ||
+					// Разрешаем: home, end, влево, вправо
+					(event.keyCode >= 35 && event.keyCode <= 39)) {
+					// Ничего не делаем
+					return;
+				} else {
+					// Запрещаем все, кроме цифр на основной клавиатуре, а так же Num-клавиатуре
+					if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+						event.preventDefault();
+					}
+				}
+			}
+
+			function createInputPayload(addPayloadBtn) {			//Добавление input с нагрузкой канала по нажатию на +
+				addPayloadBtn.addEventListener('click', (e) => {
+					const payloadForm = document.querySelector('.payload__form')
+					const inputPayloadHTML = `<input class = 'input-payload form-input' placeholder="Условный номер связи : наименование" required>`
+					payloadForm.insertAdjacentHTML('beforeend', inputPayloadHTML)
+					if ((e.target.closest('.edit-sp__container'))) {
+						const z = document.querySelector('.edit-sp__container').offsetHeight
+						document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+					} else {
+						const z = document.querySelector('.add-sp__container').offsetHeight
+						document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+					}
+
+				})
+			}
+			function removeInputPayload(removePayloadBtn) {			//Удаление input с нагрузкой канала по нажатию -
+				removePayloadBtn.addEventListener('click', (e) => {
+					const payloadForm = document.querySelector('.payload__form')
+					if (payloadForm.childElementCount > 1) {
+						payloadForm.lastChild.remove()
+					}
+					if ((e.target.closest('.edit-sp__container'))) {
+						const z = document.querySelector('.edit-sp__container').offsetHeight
+						document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+					} else {
+						const z = document.querySelector('.add-sp__container').offsetHeight
+						document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+					}
+
+
+				})
+			}
+
+			function createInputReserveVariant(addReserveVariant, addPartOfReserveBtn, removePartOfReserveBtn) {			//Создание дополнительного варианта резервирования
+				let inputReserveVariantCounter = 2
+				addPartOfReserveBtn.forEach(el => {
+					el.addEventListener('click', addInputPartOfReserve)
+				})
+
+				addReserveVariant.addEventListener('click', () => {
+					const reserveContainer = document.querySelector('.add-sp__reserve')
+					reserveContainerEdit = document.querySelector('.edit-sp__reserve')
+					const inputReserveVariantHTML =
+						`<form class='reserve__form reserveVariant${inputReserveVariantCounter} sp-form'>
+									<input class = 'input-reserve form-input name-variant' type="text" value="Вариант №" required>
+									<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+									<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+									<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>
+									<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+									<div class="add-reserve-part__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-reserve-part__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</form>`
+					if (reserveContainer) {
+						reserveContainer.insertAdjacentHTML('beforeend', inputReserveVariantHTML)
+					} else if (reserveContainerEdit) {
+						reserveContainerEdit.insertAdjacentHTML('beforeend', inputReserveVariantHTML)
+					}
+
+					inputReserveVariantCounter += 1
+					addPartOfReserveBtn = document.querySelectorAll('.add-reserve-part__btn')
+					removePartOfReserveBtn = document.querySelectorAll('.remove-reserve-part__btn')
+
+					addPartOfReserveBtn.forEach(element => {
+						element.removeEventListener('click', addInputPartOfReserve)
+						element.addEventListener('click', addInputPartOfReserve)
+					});
+					removePartOfReserveBtn.forEach(element => {
+						element.removeEventListener('click', removePartOfReserve)
+						element.addEventListener('click', removePartOfReserve)
+					})
+				})
+			}
+
+			function addInputPartOfReserve(e) {				//Добавление части трассы к варианту резервирования
+				const inputPartOfReserveHTML =
+					`<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+						<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>
+						<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>`
+				let currentBtnPartOfTrase = event.target.closest('.add-reserve-part__btn')
+				currentBtnPartOfTrase.insertAdjacentHTML('beforebegin', inputPartOfReserveHTML)
+				if ((e.target.closest('.edit-sp__container'))) {
+					const z = document.querySelector('.edit-sp__container').offsetHeight
+					document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+				} else {
+					const z = document.querySelector('.add-sp__container').offsetHeight
+					document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+				}
+
+			}
+
+			function removeInputReserveVariant(removeReserveVariantBtn) {		//Удаление варианта резервирования
+				removeReserveVariantBtn.addEventListener('click', (e) => {
+					const addSpReserve = document.querySelector('.add-sp__reserve')
+					editSpReserve = document.querySelector('.edit-sp__reserve')
+					if (addSpReserve) {
+						if (addSpReserve.childElementCount > 2) {
+							addSpReserve.lastChild.remove()
+						}
+					} else if (editSpReserve) {
+						if (editSpReserve.childElementCount > 2) {
+							editSpReserve.lastChild.remove()
+						}
+					}
+
+				})
+			}
+
+			function removePartOfReserve(e) {				//Удаление части трассы варианта резервирования
+				let reserveForm = event.target.closest('.reserve__form')
+				let inputNodes = reserveForm.querySelectorAll('.node')
+				let inputLines = reserveForm.querySelectorAll('.line')
+				let inputPairs = reserveForm.querySelectorAll('.pair')
+				if (inputNodes.length > 2) {
+					inputNodes[inputNodes.length - 1].remove()
+					inputLines[inputLines.length - 1].remove()
+					inputPairs[inputPairs.length - 1].remove()
+				}
+				if ((e.target.closest('.edit-sp__container'))) {
+					const z = document.querySelector('.edit-sp__container').offsetHeight
+					document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+					console.log("да");
+				} else {
+					const z = document.querySelector('.add-sp__container').offsetHeight
+					document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+					console.log("нет");
+				}
+			}
+
+			function addSystemInArray(systemsArray) {		//Добавление созданной трассы в массив
+				const addSpContainer = document.querySelector('.add-sp__container')
+
+				document.querySelector('.wrapper__1--container').classList.remove('more-more')
+				document.querySelector('.wrapper__1--container').style.height = "110px"
+
+				let newSystem = new Object();
+				let payloadsArray = new Array()
+				let payloadsObject = new Object()
+				let variantReserveArray = new Array();
+				let inputNumberPin = document.querySelector('#numberPin')
+				let inputKind = document.querySelector('#inputKind')
+				let inputNumberSystem = document.querySelector('#numberSP')
+				let inputPriority = document.querySelector('#inputPriority')
+				let inputCorrespondent = document.querySelector('#correspondent')
+				let inputNumberKMU = document.querySelector('#numberKMU')
+				let inputType = document.querySelector('#inputType')
+				let inputPayload = document.querySelectorAll('.input-payload')
+				let reserveForm = document.querySelectorAll('.reserve__form')
+
+				newSystem.id = Number(inputNumberPin.value)
+				newSystem.pin = Number(inputNumberPin.value)
+				newSystem.kind = inputKind.value
+				newSystem.numberSystem = String(inputNumberSystem.value)
+				newSystem.priority = inputPriority.value
+				newSystem.correspondent = inputCorrespondent.value
+				newSystem.type = inputType.value
+				newSystem.kmu = String(inputNumberKMU.value)
+
+				inputPayload.forEach(function (el, index) {
+					payloadsObject['payloads' + index + 1] = el.value
+				});
+				payloadsArray.push(payloadsObject)
+				newSystem.payloads = payloadsArray
+
+				reserveForm.forEach(el => {
+					let variantReserveObject = new Object()
+					let nodesObject = new Object()
+					let linesObject = new Object()
+					let pairsObject = new Object()
+					let nameVariant = el.querySelector('.name-variant')
+					let traceNode = el.querySelectorAll('.node')
+					let traceLine = el.querySelectorAll('.line')
+					let tracePair = el.querySelectorAll('.pair')
+					let nodeCounter = 1
+					let lineCounter = 1
+					let pairCounter = 1
+					traceNode.forEach(item => {
+						nodesObject['node' + nodeCounter] = item.value
+						nodeCounter += 1
+					})
+					traceLine.forEach(item => {
+						linesObject['line' + lineCounter] = item.value
+						lineCounter += 1
+					})
+					tracePair.forEach(item => {
+						pairsObject['pair' + pairCounter] = item.value
+						pairCounter += 1
+					})
+
+					variantReserveObject["numberVariant"] = nameVariant.value
+					variantReserveObject["nodes"] = nodesObject
+					variantReserveObject["lines"] = linesObject
+					variantReserveObject["pairs"] = pairsObject
+					variantReserveArray.push(variantReserveObject)
+				})
+				newSystem.trases = variantReserveArray
+				if (systemsArray.length == 0) {
+					systemsArray.push(newSystem)
+				} else {
+					for (let index = 0; index < systemsArray.length; index++) {
+						const element = systemsArray[index];
+						if (newSystem.pin < element.pin) {
+							systemsArray.splice(index, 0, newSystem)
+							showNotify('green', 'Изменения приняты')				//Уведомление,что изменения приняты
+							addSpContainer.remove()			//Удаляет блок с формой 
+							break
+						} else if (newSystem.pin > element.pin && index + 1 == systemsArray.length) {
+							systemsArray.push(newSystem)
+							showNotify('green', 'Изменения приняты')				//Уведомление,что изменения приняты
+							addSpContainer.remove()			//Удаляет блок с формой 
+							break
+						} else if (newSystem.pin > element.pin) {
+							continue
+						}
+						else if (newSystem.pin == element.pin) {
+							showNotify('red', 'Данный pin уже используется, введите другой pin')								//Уведомление, что такой пин занят
+							break
+						}
+					}
+				}
+			}
+			///////////////////////////////////////Добавление СП в JSON end////////////////////////////
+
+			///////////////////////////////////////Редактирование СП  start////////////////////////////
+			function editSP(systemsArray) {
+				const btnEdit = document.querySelectorAll('.btn_edit')
+				let editMainSpHTML =
+					`<div class="edit-sp__container">
+							<div class="edit-sp__main">
+								<div class="main__title">Основная информация</div>
+								<form class='main__form sp-form' id='addSpMainForm'>
+									<input class = 'form-input' type="text" name="№" id="numberPin" placeholder="Введите номер Pin" required>
+									<select class = 'form-select' id="inputKind" required>
+										<option value='' selected disabled hidden>Выберите вид СП</option>
+										<option value='ТТ'>ТТ</option>
+										<option value='ВЧ'>ВЧ</option>
+										<option value='Цифровая'>Цифровая</option>
+									</select>
+									<input class = 'form-input' type="text" name="Система передачи" id="numberSP" placeholder="Введите номер СП" required>
+									<select class = 'form-select' id="inputPriority" placeholder="Выберите приоритет" required>
+										<option selected disabled hidden>Выберите приоритет</option>
+										<option>Обыкновенный</option>
+										<option>Особо важная</option>
+									</select>
+									<input class = 'form-input' type="text" name="Корреспондент" id="correspondent" placeholder="Введите корреспондента" required>
+									<input class = 'form-input' type="text" name="КМУ" id="numberKMU" placeholder="Введите номер КМУ" required>
+									<select class = 'form-select' id = "inputType"> required
+										<option selected disabled hidden>Выберите тип СП</option>
+										<option>Аналоговая</option>
+										<option>Цифровая</option>
+									</select>
+								</form>
+							</div>
+							<div class="edit-sp__payload">
+								<div class="payload__container">
+									<div class="payload__title">Загрузка системы</div>
+									<div class="add-payload__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-payload__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</div>
+								<form class='payload__form sp-form' id='editSpPayloadForm'>
+									
+								</form>
+							</div>
+							<div class="edit-sp__reserve">
+								<div class="reserve__container">
+									<div class="reserve__title">Варианты резервирования</div>
+									<div class="add-reserve__btn more">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-reserve__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</div>
+							</div>
+							<div class='edit-sp__buttons'>
+								<div class='edit-system__btn instruments__btn'>Сохранить изменения</div>
+							</div>`
+
+				btnEdit.forEach(el => {
+					el.addEventListener('click', (event) => {
+						event.stopImmediatePropagation()
+						btn_black()
+						document.querySelector('.log-text__wrapper').classList.add('log-read__off')
+						let editSpContainer = document.querySelector('.edit-sp__container')
+						addSpContainer = document.querySelector('.add-sp__container')
+						if (editSpContainer) {
+							editSpContainer.remove()
+						} else if (addSpContainer) {
+							addSpContainer.remove()
+						}
+						wrapCont.insertAdjacentHTML('beforeend', editMainSpHTML)
+						let inputNumberPin = document.querySelector('#numberPin')
+						let inputKind = document.querySelector('#inputKind')
+						let inputNumberSystem = document.querySelector('#numberSP')
+						let inputPriority = document.querySelector('#inputPriority')
+						let inputCorrespondent = document.querySelector('#correspondent')
+						let inputNumberKMU = document.querySelector('#numberKMU')
+						let inputType = document.querySelector('#inputType')
+						let payloadForm = document.querySelector('.payload__form')
+
+						let systemRow = el.closest('.table__item')
+						let systemRowGrid = el.closest('.table__grid')
+						let numberPin = systemRow.querySelector('.row-number')
+						let kindSP = systemRow.querySelector('.kindSystem')
+						let numberSP = systemRow.querySelector('.numberSystem')
+						let prioritySP = systemRow.querySelector('.priority')
+						let correspondent = systemRow.querySelector('.correspondent')
+						let numberKMU = systemRow.querySelector('.kmu-number')
+						let typeSP = systemRow.querySelector('.type')
+
+						inputNumberPin.value = numberPin.innerText
+						inputKind.value = kindSP.innerText
+						inputNumberSystem.value = numberSP.innerText
+						inputPriority.value = prioritySP.innerText
+						inputCorrespondent.value = correspondent.innerText
+						inputNumberKMU.value = numberKMU.innerText
+						inputType.value = typeSP.innerText
+
+						inputNumberPin.addEventListener('keydown', checkInput)
+
+						let found = systemsArray.find(e => e.numberSystem == inputNumberSystem.value)
+						let foundIndex = systemsArray.indexOf(found)
+						let payloadListArray = systemRowGrid.querySelectorAll('.SP-payload')
+
+						for (let index = 0; index < payloadListArray.length; index++) {
+							let editPayloadSpHTML = `<input class = 'input-payload${[index]} form-input' type="text" placeholder="Условнй номер связи : наименование" required>`
+							const element = payloadListArray[index];
+							payloadForm.insertAdjacentHTML('beforeend', editPayloadSpHTML)
+							let inputPayload = payloadForm.querySelector(`.input-payload${[index]}`)
+							inputPayload.value = element.textContent
+						}
+
+						const addPayloadBtn = document.querySelector('.add-payload__btn');
+						const removePayloadBtn = document.querySelector('.remove-payload__btn')
+						createInputPayload(addPayloadBtn)
+						removeInputPayload(removePayloadBtn)
+						let inputReserveVariantCounter = 0
+
+						const reserveContainer = document.querySelector('.edit-sp__reserve')
+						for (let index = 0; index < found.trases.length; index++) {
+							const inputReserveVariantHTML =
+								`<form class='reserve__form reserveVariant${inputReserveVariantCounter} sp-form'>
+										<input class = 'input-reserve form-input name-variant' type="text" value="Вариант №" required>
+										<div class="add-reserve-part__btn">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<circle cx="12" cy="12" r="10"/>
+											<line x1="12" y1="8" x2="12" y2="16"/>
+											<line x1="8" y1="12" x2="16" y2="12"/>
+											</svg>
+										</div>
+										<div class="remove-reserve-part__btn">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<circle cx="12" cy="12" r="10"/>
+											<line x1="8" y1="12" x2="16" y2="12"/>
+											</svg>
+										</div>
+									</form>`
+							reserveContainer.insertAdjacentHTML('beforeend', inputReserveVariantHTML)
+
+							let reserveVariant = found.trases[index]
+							reserveVariantNodes = reserveVariant.nodes;
+							reserveVariantLines = reserveVariant.lines;
+							reserveVariantPairs = reserveVariant.pairs;
+							nodesCounter = Object.keys(reserveVariantNodes).length
+							currentReserveVariant = document.querySelector(`.reserveVariant${inputReserveVariantCounter}`)
+							currentNameVariant = currentReserveVariant.querySelector('.name-variant')
+							reservePartBtn = currentReserveVariant.querySelector('.add-reserve-part__btn')
+
+							currentNameVariant.value = reserveVariant.numberVariant
+							for (let i = 1; i <= nodesCounter; i++) {
+								if (i != nodesCounter) {
+									const inputPartOfReserveHTML =
+										`<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+										<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+										<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>`
+									reservePartBtn.insertAdjacentHTML('beforebegin', inputPartOfReserveHTML)
+								} else {
+									const inputPartOfReserveHTML =
+										`<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>`
+									reservePartBtn.insertAdjacentHTML('beforebegin', inputPartOfReserveHTML)
+								}
+							}
+
+							traceNodeInput = currentReserveVariant.querySelectorAll('.node')
+							traceLineInput = currentReserveVariant.querySelectorAll('.line')
+							tracePairInput = currentReserveVariant.querySelectorAll('.pair')
+
+							for (let index = 0; index < traceNodeInput.length; index++) {
+								const element = traceNodeInput[index];
+								element.value = reserveVariantNodes[`node${[index + 1]}`]
+							}
+							for (let index = 0; index < traceLineInput.length; index++) {
+								const element = traceLineInput[index];
+								element.value = reserveVariantLines[`line${[index + 1]}`]
+							}
+							for (let index = 0; index < tracePairInput.length; index++) {
+								const element = tracePairInput[index];
+								element.value = reserveVariantPairs[`pair${[index + 1]}`]
+							}
+
+							inputReserveVariantCounter += 1
+						}
+
+						const addReserveVariant = document.querySelector('.add-reserve__btn')
+						const addPartOfReserveBtn = document.querySelectorAll('.add-reserve-part__btn')
+						const removeReserveVariantBtn = document.querySelector('.remove-reserve__btn')
+						const removePartOfReserveBtn = document.querySelectorAll('.remove-reserve-part__btn')
+						createInputReserveVariant(addReserveVariant, addPartOfReserveBtn, removePartOfReserveBtn)
+						removeInputReserveVariant(removeReserveVariantBtn)
+
+						removePartOfReserveBtn.forEach(el => {
+							el.addEventListener('click', removePartOfReserve)
+						})
+						removePartOfReserveBtn.forEach(el => {
+							el.addEventListener('click', removePartOfReserve)
+						})
+
+						const editSystemInArrayBtn = document.querySelector('.edit-system__btn')
+						editSystemInArrayBtn.addEventListener('click', () => {
+							let allFormSp = document.querySelectorAll('.sp-form')
+							for (let index = 0; index < allFormSp.length; index++) {
+								const el = allFormSp[index];
+								if (el.checkValidity() === true && index + 1 != allFormSp.length) {
+									continue
+								} else if (el.checkValidity() === true && index + 1 == allFormSp.length) {
+									editSystemInArray()
+								} else if (el.checkValidity() === false) {
+									break
+								}
+							}
+						})
+
+						function editSystemInArray() {
+							editSpContainer = document.querySelector('.edit-sp__container')
+
+							found.id = Number(inputNumberPin.value)
+							found.pin = Number(inputNumberPin.value)
+							found.kind = inputKind.value
+							found.numberSystem = String(inputNumberSystem.value)
+							found.priority = inputPriority.value
+							found.correspondent = inputCorrespondent.value
+							found.kmu = String(inputNumberKMU.value)
+							found.type = inputType.value
+
+							let payloadForm = document.querySelector('.payload__form')
+							let payloadsObject = new Object()
+							let newPayloadsArray = new Array()
+
+							inputPayload = payloadForm.querySelectorAll('.form-input')
+							inputPayload.forEach(function (el, index) {
+								payloadsObject['payloads' + index + 1] = el.value
+							});
+							newPayloadsArray.push(payloadsObject)
+							found.payloads = newPayloadsArray
+
+							let reserveForm = document.querySelectorAll('.reserve__form')
+							let newTrasesArray = new Array()
+							for (let index = 0; index < reserveForm.length; index++) {
+								let element = reserveForm[index];
+								let newVariantReserveObject = new Object()
+								let newNodesObject = new Object()
+								let newLinesObject = new Object()
+								let newPairsObject = new Object()
+								let inputNameVariant = element.querySelector('.name-variant')
+								let inputNodes = element.querySelectorAll('.node')
+								let inputLines = element.querySelectorAll('.line')
+								let inputPairs = element.querySelectorAll('.pair')
+
+								for (let i = 0; i < inputNodes.length; i++) {
+									const item = inputNodes[i];
+									newNodesObject[`node${i + 1}`] = item.value
+								}
+								for (let i = 0; i < inputLines.length; i++) {
+									const item = inputLines[i];
+									newLinesObject[`line${i + 1}`] = item.value
+								}
+								for (let i = 0; i < inputPairs.length; i++) {
+									const item = inputPairs[i];
+									newPairsObject[`pair${i + 1}`] = item.value
+								}
+								newVariantReserveObject['numberVariant'] = inputNameVariant.value
+								newVariantReserveObject['nodes'] = newNodesObject
+								newVariantReserveObject['lines'] = newLinesObject
+								newVariantReserveObject['pairs'] = newPairsObject
+								newTrasesArray.push(newVariantReserveObject)
+								found.trases = newTrasesArray
+							}
+							showNotify('green', 'Изменения приняты')
+							editSpContainer.remove()
+						}
+						document.querySelector('.wrapper__1--container').style.height = y + 70 + document.querySelector('.edit-sp__container').offsetHeight + "px"
+						document.querySelector('.wrapper__1').classList.add('open')
+						document.querySelector('.btn__more').classList.add('btn_open')
+					})
+				})
+			}
+			///////////////////////////////////////Редактирование СП в end////////////////////////////
+
+			///////////////////////////////////////Удаление СП start//////////////////////////////////
+			function removeSP(systemsArray) {
+				const btnRemove = document.querySelectorAll('.btn_delete')
+				btnRemove.forEach(el => {
+					el.addEventListener('click', (event) => {
+						event.stopImmediatePropagation()
+						let systemRow = el.closest('.table__item')
+						let numberSystem = systemRow.querySelector('.numberSystem')
+						let found = systemsArray.findIndex(e => e.numberSystem == numberSystem.innerText)
+						systemsArray.splice(found, 1)
+						systemRow.remove()
+					})
+				});
+			}
+			///////////////////////////////////////Удаление СП end/////////////////////////////////////
+			function sendJSON(systemsArray) {
+				let xhrEdit = new XMLHttpRequest();
+				xhrEdit.open("POST", '/editJSON')
+				xhrEdit.setRequestHeader('Content-type', 'application/json; charset=utf-8')
+				if (xhrEdit.readyState == 1) {
+					showNotify('grey', 'Идёт отправка изменений на сервер')
+				}
+				xhrEdit.onload = () => {
+					showNotify('green', 'Изменения успешно отправлены на сервер')
+				}
+				xhrEdit.send(JSON.stringify(systemsArray))
+
+			}
+
+			function scriptAfterLoad() {
+
+				const correspondents = document.querySelectorAll('.correspondent')
+				const popupBG = document.querySelector('.popup__bg')
+				const form = document.querySelector('.search-form')
+				const numbersOfSystems = document.querySelectorAll('.numberSystem')
+				const kmuNumbers = document.querySelectorAll('.kmu-number')
+				const preloader = document.querySelector('.preloader')
+				const logTextArea = document.querySelector('#log-area')
+				const logShowButton = document.querySelector('.log-show__button')
+				const logRemoveButton = document.querySelector('.log-remove__button')
+				const logHiddenButton = document.querySelector('.log-hidden__button')
+				const logTextWrap = document.querySelector('.log-text__wrapper')
+
+
+				const x = document.querySelector('#log-area').offsetWidth
+				///////////////////////////////// раскрытие меню инструментов start////////////////////////////
+				document.querySelector('.btn__more').addEventListener('click', () => {
+
+					if (document.querySelector('.wrapper__1').classList.contains('open')) {
+						document.querySelector('.wrapper__1--container').style.height = "30px"
+						document.querySelector('.wrapper__1').classList.remove('open');
+						document.querySelector('.btn__more').classList.remove('btn_open');
+					} else {
+						document.querySelector('.wrapper__1--container').classList.add('wrapper__1--container_open')
+						document.querySelector('.wrapper__1').classList.add('open')
+						document.querySelector('.btn__more').classList.add('btn_open')
+						if (document.querySelector('.wrapper__1--container').classList.contains('more-more')) {
+
+						} else {
+							document.querySelector('.wrapper__1--container').style.height = 50 + y + "px"
+						}
+						if (document.querySelector('.log-text__wrapper').classList.contains('log-read__off')) {
+							document.querySelector('.wrapper__1--container').style.height = "80px";
+						} else {
+							document.querySelector('.wrapper__1--container').style.height = document.querySelector('.log-text__wrapper').offsetHeight + 90 + "px"
+						}
+						if (document.querySelector('.add-sp__container')) {
+							document.querySelector('.wrapper__1--container').style.height = y + 75 + document.querySelector('.add-sp__container').offsetHeight + "px"
+						}
+					}
+				})
+
+				document.querySelector('.wrapper__1').addEventListener('click', (event) => {
+					if (event.target.closest('.add-reserve__btn') || event.target.closest('.remove-reserve__btn')) {
+						if ((event.target.closest('.edit-sp__container'))) {
+							const z = document.querySelector('.edit-sp__container').offsetHeight
+							document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+						} else {
+							const z = document.querySelector('.add-sp__container').offsetHeight
+							document.querySelector('.wrapper__1--container').style.height = 70 + y + z + "px"
+						}
+
+					}
+				})
+
+
+
+
+				///////////////////////////////// раскрытие меню инструментов end////////////////////////////
+
+				////////////////////////////////////// Popup start///////////////////////////////////////////
+
+				// Отображение и скрытие попапа
+				let ssystem = document.querySelectorAll('.table__grid');
+
+				function popup() {
+					// Отображение и скрытие попапа
+					ssystem.forEach(function (item) {
+						item.addEventListener('click', function () {
+							let popup = item.querySelector('.popup')
+							let width_position = (window.innerWidth - popup.offsetWidth) / 2
+							let height_position = document.documentElement.scrollTop + 100
+
+							popupBG.classList.add('popup__bg--on')
+							popup.classList.add('popup__on')
+
+							popup.style.top = height_position + "px"
+							popup.style.left = width_position + "px"
+							document.querySelector('body').style.overflowY = "hidden"
+
+							let popupClose = item.querySelector('.close')
+							popupClose.addEventListener('click', (event) => {
+								event.stopPropagation()
+								popupBG.classList.remove('popup__bg--on')
+								popup.classList.remove('popup__on')
+								document.querySelector('body').style.overflowY = "visible"
+							}
+							)
+						})
+					})
+				}
+				popup()
+
+				/////////////////////////////////////// Popup end////////////////////////////////////////////
+
+				////////////////////////////////////// Filters start///////////////////////////////////////////
+
+				///////////////////////////// Фильтр поиск start/////////////////////////////////
+				function filter(ev) {
+					ev.preventDefault()
+					const input = document.querySelector('#system-search')
+					if (Number(input.value)) {
+						let inputValue = input.value.replace(/\D/g, '') // Получает только цифры введенные в поле поиска
+						numbersOfSystems.forEach((item) => {
+							let numberSystem = item.innerHTML // Получаем номер системы
+							let parentNumber = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (numberSystem.includes(inputValue)) {
+								parentNumber.classList.add('.show_search')
+								parentNumber.classList.remove('.hidden_search')
+							} else {
+								parentNumber.classList.add('hidden_search')
+								parentNumber.classList.remove('show_search')
+							}
+						})
+					} else {
+						let inputValue = input.value.replace(/\d/g, '') // Получает только цифры введенные в поле поиска
+						correspondents.forEach((item) => {
+							let correspondent = item.innerHTML.toLowerCase() // Получаем корреспондента
+							let parentCorrespondent = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (correspondent.includes(inputValue.toLowerCase())) {
+								parentCorrespondent.classList.add('.show_search')
+								parentCorrespondent.classList.remove('.hidden_search')
+							} else {
+								parentCorrespondent.classList.add('hidden_search')
+								parentCorrespondent.classList.remove('show_search')
+							}
+						})
+					}
+				}
+				function filterReset() {
+					const input = document.querySelector('#system-search')
+					numbersOfSystems.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+					correspondents.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+				}
+				form.addEventListener('keyup', filter)
+				form.addEventListener('keyup', filterReset)
+				///////////////////////////// Фильтр поиск end/////////////////////////////////
+
+				////////////////////////////////////// Filters end///////////////////////////////////////////
+
+				////////////////////////////////////// Чтение лог файла start///////////////////////////////////////////
+
+				async function readLog() {
+					let response = await fetch('/log.xml')
+					if (response.ok) {
+						//присваиваем значение массива переменной
+						let logText = await response.text() // Распарсили в текст
+						let logTextCorrect = logText.slice(0, -1); //Убрали лишнюю запятую
+						logTextCorrect += "]"
+						let logArray = JSON.parse(logTextCorrect)
+						//теперь передаем этоту переменную с массивом в другую функцию
+						renderLog(logArray)
+					} else if (response.status == 404) {
+						showNotify('grey', 'Лог файл пуст')
+					}
+				}
+
+				function renderLog(logArray) {					// Отрисовываем лог в браузере
+					logTextArea.innerHTML = '';
+					logArray.forEach(function (item) {
+						const logHTML = `${item.type}: Система передачи - ${item.numberSystem} Время: ${item.time}\n`
+						logTextArea.insertAdjacentHTML('beforeend', logHTML)
+					})
+				}
+
+				logShowButton.addEventListener('click', () => {
+					logTextWrap.classList.toggle('log-read__off')
+					if (!logTextWrap.classList.contains('log-read__off')) {
+						document.querySelector('.wrapper__1--container').style.height = logTextWrap.offsetHeight + 90 + 'px';
+						document.querySelectorAll(".instruments__btn").forEach(function (el) {
+							el.style.backgroundColor = "black";
+							close_form_change_client()
+						})
+						logShowButton.style.backgroundColor = "rgba(50, 51, 56, 1)"
+
+						// закрываем "добавить сп" и форму редактирования, если они открыты
+						if (document.querySelector('.add-sp__container')) {
+							document.querySelector('.add-sp__container').remove()
+						}
+						if (document.querySelector('.edit-sp__container')) {
+							document.querySelector('.edit-sp__container').remove();
+						}
+						readLog()
+					} else {
+						document.querySelector('.wrapper__1--container').style.height = 100 + 'px';
+						console.log(document.querySelector('.wrapper__1--container').style.height);
+						logShowButton.style.backgroundColor = "black"
+						if (document.querySelector('.edit-sp__container')) {
+							document.querySelector('.edit-sp__container').remove();
+						}
+					}
+				})
+
+				function removeLog() {
+					let removeLog = new XMLHttpRequest()
+					removeLog.onreadystatechange = function () {
+						if (this.readyState == 4 && this.status == 200) {
+							showNotify('green', 'Журнал событий очищен')
+						}
+					}
+					removeLog.open('GET', 'remove_log', true);
+					removeLog.send();
+				}
+				logRemoveButton.addEventListener('click', removeLog)
+
+				////////////////////////////////////// Чтение лог файла end///////////////////////////////////////////
+
+				////////////////////////////////////// Редактирование клиетской стороны start///////////////////////
+				let client_content = document.querySelector('.client_area');
+				let btn_admin_change = document.querySelector('.index-admin');
+				let btn_user_change = document.querySelector('.index-user');
+				let btn_X_change = "";
+
+				async function readIndex() {
+					let response = await fetch(btn_X_change)
+					if (response.ok) {
+						//присваиваем значение массива переменной
+						client_content.innerHTML = '';
+						let indexAdminArray = await response.text() // Распарсили в текст
+						client_content.innerHTML = indexAdminArray
+					} else if (response.status == 404) {
+						showNotify('red', 'Ошибка чтения файла admin.htm')
+					}
+				}
+				// Событие по клику на кнопку редактировать клиента
+				const btn_chenge_client = document.querySelector('.change-index__btn');
+				function close_form_change_client() {
+					document.querySelector('.wrapper_change_client').style.display = "none";
+					btn_chenge_client.classList.remove('btn_chenge_client--open');
+					btn_chenge_client.style.backgroundColor = "black";
+				}
+				document.querySelector('.client_area').style.width = window.innerWidth - 100 - document.querySelector('.search-form').offsetWidth + "px"
+				btn_chenge_client.addEventListener('click', () => {
+					if (!btn_chenge_client.classList.contains('btn_chenge_client--open')) {
+						document.querySelector('.wrapper__1--container').style.height = document.querySelector('.form_change_client').offsetHeight + 645 + "px";
+						document.querySelector('.wrapper_change_client').style.display = "block";
+						btn_chenge_client.classList.add('btn_chenge_client--open');
+						// закрываем лог
+						document.querySelector('.log-text__wrapper').classList.add('log-read__off')
+						// закрываем "добавить сп" и форму редактирования, если они открыты
+						if (document.querySelector('.add-sp__container')) {
+							document.querySelector('.add-sp__container').remove()
+						}
+						if (document.querySelector('.edit-sp__container')) {
+							document.querySelector('.edit-sp__container').remove();
+						}
+						//красим кнопочку в активную
+						btn_chenge_client.style.backgroundColor = "rgba(50, 51, 56, 1)";
+						//закрашиваем все остальные кнопки в черный
+						logShowButton.style.backgroundColor = "black";
+						document.querySelector('.add-SP__btn').style.backgroundColor = "black";
+					} else {
+						close_form_change_client();
+						document.querySelector('.wrapper__1--container').style.height = 80 + "px";
+					}
+				})
+
+				// выбираем admin/user и отправляем данные
+
+				btn_admin_change.addEventListener('click', () => {
+					btn_admin_change.style.backgroundColor = "rgba(50, 51, 56, 1)";
+					btn_user_change.style.backgroundColor = "black";
+					btn_X_change = "/admin.htm"
+					readIndex()
+				});
+
+				btn_user_change.addEventListener('click', () => {
+					btn_user_change.style.backgroundColor = "rgba(50, 51, 56, 1)";
+					btn_admin_change.style.backgroundColor = "black";
+					btn_X_change = "/user.htm"
+					readIndex()
+				})
+
+				//отправляем данные на сервер
+				let indexContent = ""
+
+				function sendCode(indexContent) {
+					let indexContentText = new XMLHttpRequest();	
+					// выбираем что будем менять на сервер с помощью названия запроса
+					if (btn_X_change == "/user.htm") {
+						indexContentText.open("POST", "/sendUserContent", true);
+					} else {
+						indexContentText.open("POST", "/sendAdminContent", true);
+					}
+					indexContentText.setRequestHeader('Content-Type', 'UTF-8');
+					if (indexContentText.readyState == 1) {
+						showNotify('grey', 'Идёт отправка изменений на сервер')
+					}
+					indexContentText.onload = () => {
+						showNotify('green', 'Изменения успешно отправлены на сервер')
+					}
+					indexContentText.send(indexContent);
+				}
+
+				document.getElementById('index-submit').addEventListener('click', function (indexContent) {
+					event.preventDefault()
+					indexContent = document.getElementById('index-text').value;
+					sendCode(indexContent)
+				})
+
+				////////////////////////////////////// Редактирование клиетской стороны END///////////////////////
+
+				///////////////////////////////////////////MAIN-end////////////////////////////////////////////////
+			}
+			
+			// Go()
+			// mainFunction()
+
+		</script>
+	</body>
+</html>

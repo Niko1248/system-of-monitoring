@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<title>Система мониторинга</title>
+		<link rel="stylesheet" href="/style.css">
+	</head>
+
+	<body>
+		<div class="info_popup-container">
+			<div class="info_popup">
+				<p class="info_ststus ">Соединение с сервером потеряно...</p>
+
+			</div>
+		</div>
+
+		<!-- <div class="aut_container">
+			<form class="aut_form">
+				<div class="animation_load">
+					<div class="animation_load-line"></div>
+				</div>
+				<h2>Войдите в систему</h2>
+				<input type="text" id="login" placeholder="Логин">
+				<input type="password" id="password" placeholder="Пароль">
+				<button id="aut_btn">войти</button>
+			</form>
+		</div> -->
+
+		<header>
+			<main>
+				<div class="logo">
+					<div class="b1">M</div>
+					<p>ониторинг</p>
+				</div>
+				<div class="user">
+					<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none"
+						xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+							fill="#2A4157" fill-opacity="0.24" />
+						<circle cx="12" cy="10" r="4" fill="#222222" />
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							d="M18.2209 18.2462C18.2791 18.3426 18.2613 18.466 18.1795 18.5432C16.5674 20.0662 14.3928 21 12 21C9.60728 21 7.43264 20.0663 5.82057 18.5433C5.73877 18.466 5.72101 18.3427 5.77918 18.2463C6.94337 16.318 9.29215 15 12.0001 15C14.7079 15 17.0567 16.3179 18.2209 18.2462Z"
+							fill="#222222" />
+					</svg>
+					<p id="ueser_status">Admin</p>
+				</div>
+			</main>
+		</header>
+
+		<div class="top_container">
+			<div class="wrapper__1--container">
+				<div class="btn__more">
+					инструменты
+					<p style="display: flex;"></p>
+				</div>
+
+				<div class="wrapper__1">
+					<div class="instruments">
+						<form class="search-form" action="" method="">
+							<label hidden for="system-search">Фильтр</label>
+							<input placeholder="Поиск..." type="search" name="system-search" id="system-search"
+								class="system-search">
+							<script>
+								document.querySelector('#system-search').addEventListener('keydown', function (e) {
+									if (e.keyCode === 13) {
+										event.preventDefault()
+									}
+								})
+							</script>
+						</form>
+						<div class="instruments__container">
+							<div class="instruments__menu">
+								<div class=	"instruments__btn log-show__button">
+									Показать log
+								</div>
+								<div class="instruments__btn log-remove__button">
+									Удалить log
+								</div>
+								<div class="instruments__btn">
+									КИД
+								</div>
+								<div class="instruments__btn">
+									Статистика
+								</div>
+								<div class="instruments__btn add-SP__btn">
+									Добавить СП
+								</div>
+								<div class='send-system__btn instruments__btn'>Отправить на сервер</div>
+							</div>
+							<div class="log-text__wrapper log-read__off">
+								<textarea name="log-area" id="log-area" cols="60" rows="10" readonly></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="main">
+				<div class="wrapper">
+					<div class="table" id="table-systems">
+						<div class="table__title">
+							<div>№ Пин</div>
+							<div>Система передачи</div>
+							<div>Приоритет</div>
+							<div>Корреспондент</div>
+							<div>КМУ</div>
+							<div>Тип трассы</div>
+						</div>
+					</div>
+					<div class="popup__bg">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			////////////////////////////MAIN-start////////////////////////////////////////////////
+
+			////////////////////////////////Аутентификация/////////////////////
+			// let password = document.querySelector('#password');
+			// let login = document.querySelector('#login');
+			// let key = ""
+			// let accessAllowed = false
+			// function Go() {
+			// 	document.querySelector('.aut_container').classList.add('aut_close');
+			// 	document.querySelector('body').style.overflowY = "visible";
+			// 	document.querySelector('body').style.background = "1c1c1c";
+			// 	document.querySelector('.top_container').classList.add('top_container--open');
+			// 	document.querySelector('.animation_load').style.display = "none";
+			// 	document.querySelector('.animation_load-line').style.display = "none";
+			// }
+
+			// function root_access(key) {
+			// 	var access = new XMLHttpRequest();
+			// 	access.onreadystatechange = function () {
+			// 		if (this.readyState == 4 && this.status == 200 && this.responseText != null) {
+			// 			if (this.responseText == 'ok') {
+			// 				document.querySelector('.animation_load').classList.add('animation_load--s')
+			// 				document.querySelector('.animation_load-line').classList.add('animation_load-line--s')
+			// 				mainFunction()
+			// 				setTimeout(() => {
+			// 					document.querySelector('.animation_load').style.opacity = 0;
+			// 					document.querySelector('.animation_load-line').style.opacity = 0;
+			// 				}, 3000)
+			// 				setTimeout(() => {
+			// 					Go()
+			// 				}, 4000)
+			// 				setTimeout(() => {
+			// 					document.querySelector('.aut_container').style.display = "none";
+			// 				}, 4500)
+
+			// 			} else {
+			// 				check_aut_animation()
+			// 			}
+			// 		};
+			// 	}
+			// 	access.open("POST", "get_access_admin", true);
+			// 	access.send(key);
+			// }
+
+			// function check_aut_animation() {
+			// 	document.querySelector('.animation_load').classList.add('animation_load--error')
+			// 	document.querySelector('.animation_load-line').classList.add('animation_load-line--error')
+			// 	setTimeout(() => {
+			// 		document.querySelector('.animation_load--error').style.opacity = 1;
+			// 		document.querySelector('.animation_load-line--error').style.opacity = 1;
+			// 	}, 300)
+
+			// }
+
+			// document.querySelector('#aut_btn').addEventListener('click', function (event) {
+			// 	event.preventDefault()
+			// 	document.querySelector('.animation_load').classList.remove('animation_load--error')
+			// 	document.querySelector('.animation_load-line').classList.remove('animation_load-line--error')
+			// 	if (password.value.length == 0 || login.value == 0) {
+			// 		check_aut_animation()
+			// 	} else {
+			// 		key = login.value.toLowerCase() + password.value
+			// 		document.querySelector('.animation_load').style.opacity = 1;
+			// 		setTimeout(() => {
+			// 			root_access(key)
+			// 		}, 4000)
+			// 	}
+			// })
+
+			/////////////////////////////Аутентификация end/////////////////////
+
+
+
+
+			/* inf_popup start */
+			//Ошибка соединением с сервером
+			function inf_server_error() {
+				document.querySelector('.info_popup-container').style.top = "0%";
+				document.querySelector('.info_ststus').innerHTML = "Соединение с сервером потеряно..."
+			}
+			//Авария
+			function popup_alarm() {
+				document.querySelector('.info_popup-container').style.top = "0%";
+				document.querySelector('.info_ststus').innerHTML = "АВАРИЯ!"
+			}
+			//Изменения приняты
+			function changes_accepted() {
+				document.querySelector('.info_popup-container').style.top = "0%";
+				document.querySelector('.info_popup').classList.toggle("changes_accepted")
+				document.querySelector('.info_ststus').innerHTML = "Изменения приняты"
+			}
+			// действия при клике
+			function inf_popup_close() {
+				document.querySelector('.info_popup').addEventListener('click', () => {
+					document.querySelector('.info_popup-container').style.top = "-100%";
+				})
+			}
+			inf_popup_close()
+
+			/* info_popup end */
+
+
+
+
+
+
+			////////////////////////////////////////RENDER_SYSTEMS-start/////////////////////////////////////
+			const systemsContainer = document.querySelector('#table-systems');
+
+			getSystems()
+			async function getSystems() {
+				//получаем массив из json в котором мы определили массив
+				//обязательно через await,необходимо достоверно получить данные
+				const response = await fetch('/sis.jso')
+				//присваиваем значение массива переменной
+				const systemsArray = await response.json()
+				//теперь передаем этоту переменную с массивом в другую функцию
+				renderSystems(systemsArray)
+				editSP(systemsArray)
+				addSP(systemsArray)
+				removeSP(systemsArray)
+				renderSp(systemsArray);
+				scriptAfterLoad()
+				return systemsArray;
+			}
+
+			async function mainFunction() {
+				const systemsArray = await getSystems()
+				renderSystems(systemsArray)
+				editSP(systemsArray)
+				addSP(systemsArray)
+				removeSP(systemsArray)
+				renderSp(systemsArray);
+				scriptAfterLoad()
+			}
+			const wrapCont = document.querySelector('.wrapper__1')
+
+			function renderSystems(systemsArray) {
+				//перебираем все элементы в массиве и вставляем их в шаблон
+				let payloadListCounter = 0
+						popupReserveCounter = 0
+				systemsArray.forEach(function (item) {
+					const systemHTML =
+						`<div class="table__grid" id="${item.id}">
+						<div class="table__item">
+							<div class="row-number">${item.pin}</div>
+							<div class="numberSystem">${item.numberSystem}</div>
+							<div class="priority">${item.priority}</div>
+							<div class="correspondent">${item.correspondent}</div>
+							<div class="kmu-number">${item.kmu}</div>
+							<div class='type'>${item.type}</div>
+							<div class="btn_edit">
+								<svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+									width="20px" height="20px" viewBox="0 0 494.936 494.936" 
+									xml:space="preserve">
+								<g>
+									<g>
+										<path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157
+											c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21
+											s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741
+											c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"/>
+										<path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069
+											c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963
+											c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692
+											C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107
+											l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005
+											c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"/>
+									</g>
+								</g>
+								</svg>
+							</div>
+							<div class="btn_delete">&#10006</div>
+						</div>
+					<div class="popup__wrapper">
+						<div class="popup">
+							<div class="popup__header">
+								<div style="margin-left:20px;">Система передач №:${item.numberSystem}																
+								</div>
+								<div class="close">
+										<div></div>
+										<div></div>
+								</div>
+							</div>
+							
+							<div class="popup__content">
+								<div class="popup__state"><p style="margin:50px 0px 20px 0px;font-weight:bold">Состояние:</p></div>
+								<div class="popup__content-down" style="text-align: start;">
+									<h3 style="margin-bottom:10px;font-weight:bold">Загрузка:</h3> 
+									<ul class = payload__list${payloadListCounter}>
+									</ul>	
+								</div>
+								<div class="popup__reserve popup__reserve${popupReserveCounter}">
+									<p style="margin:10px 0;font-weight:bold">Вариант резервирования:</p>
+									<select class="reserve">
+									</select>
+									<div class="pic-trace">
+										<div class="circle"></div>
+										<div class="trase_line">
+											<p class="KMU"></p>
+											<p class="HF-pair"></p>
+										</div>
+										<div class="circle"></div>
+										<div class="trase_line">
+											<p class="KMU"></p>
+											<p class="HF-pair"></p>
+										</div>
+										<div class="circle"></div>
+										<div class="trase_line">
+											<p class="KMU"></p>
+											<p class="HF-pair"></p>
+										</div>
+										
+										<div class="circle"></div>	
+										<div class="length" style="visibility:hidden"></div>		
+									</div>
+								</div>
+							</div>	
+					</div>`
+
+					//вставляем шаблон в страницу(отрисовываем)
+					systemsContainer.insertAdjacentHTML('beforeend', systemHTML)
+
+					const payloadList = document.querySelector(`.payload__list${payloadListCounter}`)
+					counterPayload = 0
+					const elementPayloads = item.payloads[counterPayload]
+					for (const key in elementPayloads) {
+						let payloadSP = elementPayloads[key]
+						payloadSPHTML = `<li class = 'SP-payload'>${payloadSP}</li>`
+						payloadList.insertAdjacentHTML('beforeend', payloadSPHTML)
+						counterPayload += 1
+					}
+					payloadListCounter += 1
+
+
+					let popupReserve = document.querySelector(`.popup__reserve${popupReserveCounter}`)
+					NumberVariantList = popupReserve.querySelector('.reserve')
+					for (let index = 0; index < item.trases.length; index++) {
+						let element = item.trases[index];
+						if (index != 0) {
+							let NumberVariantHTML = `<option value="${index}">${element.numberVariant}</option>`
+							NumberVariantList.insertAdjacentHTML('beforeend', NumberVariantHTML)
+						} else {
+							let NumberVariantHTML = `<option value="${index}" selected>${element.numberVariant}</option>`
+							NumberVariantList.insertAdjacentHTML('beforeend', NumberVariantHTML)
+						}
+					}
+					popupReserveCounter += 1
+				})
+			}
+			let val = 0
+			///////////////////////////////////////render-trases-START/////////////////////////////////////
+			function renderSp(systemsArray) {
+				const SPelements = document.querySelectorAll('.table__grid');
+				SPelements.forEach(function(SPelement, index) {
+					renderTrases(systemsArray[index].trases, 0, index )
+
+					SPelement.addEventListener('click', (e) => {
+						const parent = e.target.closest('.table__grid')
+						const SP__id = parent.getAttribute('id');
+						const SP = systemsArray.find((val) => {
+							if (val.id === Number(SP__id)) return val;
+						});
+						parent.querySelector('.pic-trace');
+						let select_form = parent.querySelectorAll('.reserve');
+						select_form.forEach((option) => {
+							option.addEventListener('change', (e) => {
+								val = Number(e.target.value);
+								renderTrases(SP.trases, val, SP__id);
+							});
+						});
+					})
+				});
+			}
+
+			function renderTrases(traseArray, traseNumber, SP__id) {
+				const trase = traseArray[traseNumber];
+				const nodes = Object.values(trase.nodes);
+				const lines = Object.values(trase.lines);
+				const pairs = Object.values(trase.pairs);
+				const wrapper = document.createElement('div');
+				const picTrace = document.querySelectorAll('.pic-trace')
+				const picTraceEl = Array.from(picTrace)
+				wrapper.classList.add('pic-trace')
+				nodes.forEach((node, i) => {
+					const circleEl = document.createElement('div');
+					circleEl.classList.add('circle');
+					circleEl.textContent = nodes[i];
+					wrapper.append(circleEl);
+					if (i !== nodes.length - 1) {
+						const innerHTML = `
+						<div class="trase_line" style="z-index:9999;" >
+							<p class="KMU">${lines[i]}</p>
+							<p class="HF-pair">${pairs[i]}</p>
+						</div>`;
+						wrapper.insertAdjacentHTML('beforeend', innerHTML)
+					}
+				})
+				picTraceEl[Number(SP__id)].replaceWith(wrapper)
+			}
+			///////////////////////////////////////render-trases-END/////////////////////////////////////
+
+
+
+
+
+			function addSP(systemsArray) {
+					const addSpBtn = document.querySelector('.add-SP__btn')
+					
+					addSpBtn.addEventListener('click', () => {
+						const addSpContainer = document.querySelector('.add-sp__container')
+						document.querySelector('.wrapper__1--container_open').classList.remove('more-log');
+						document.querySelector(".log-text__wrapper").classList.add('log-read__off')
+						document.querySelector('.wrapper__1--container_open').style.height = "410px";
+						document.querySelector('.wrapper__1--container_open').classList.add('more-more');
+						createFormAddSP(addSpContainer, addSpBtn)
+						const addSystemInArrayBtn = document.querySelector('.add-system__btn')
+						addSystemInArrayBtn.addEventListener('click', () => {
+							let allFormSp = document.querySelectorAll('.sp-form')
+							for (let index = 0; index < allFormSp.length; index++) {
+								const el = allFormSp[index];
+								if (el.checkValidity() === true && index + 1 != allFormSp.length) {
+									continue
+								} else if (el.checkValidity() === true && index + 1 == allFormSp.length) {
+									addSystemInArray(systemsArray)
+								} else if (el.checkValidity() === false) {
+									break
+								}
+							}
+						
+					})
+
+				})
+
+				const sendSystemBtn = document.querySelector('.send-system__btn')
+				sendSystemBtn.addEventListener('click', () => {
+					sendJSON(systemsArray)
+				})
+			}
+
+			function createFormAddSP(addSpContainer, addSpBtn) {
+				const addSpHTML = `<div class="add-sp__container">
+						<div class="add-sp__main">
+							<div class="main__title">Основная информация</div>
+							<form class='main__form sp-form' id='addSpMainForm'>
+								<input class = 'form-input' type="text" name="№" id="numberPin" placeholder="Введите номер Pin"  required>
+								<input class = 'form-input' type="text" name="Система передачи" id="numberSP" placeholder="Введите номер СП" required>
+								<select class = 'form-select' id="inputPriority" required>
+									<option value='' selected disabled hidden>Выберите приоритет</option>
+									<option value='Обыкновенный'>Обыкновенный</option>
+									<option value='Особо важная'>Особо важная</option>
+								</select>
+								<input class = 'form-input' type="text" name="Корреспондент" id="correspondent" placeholder="Введите корреспондента" required>
+								<input class = 'form-input' type="text" name="КМУ" id="numberKMU" placeholder="Введите номер КМУ" required>
+								<select class = 'form-select' id = "inputType" required> 
+									<option value='' selected disabled hidden>Выберите тип СП</option>
+									<option value='Аналоговая'>Аналоговая</option>
+									<option value='Цифровая'>Цифровая</option>
+								</select>
+							</form>
+						</div>
+						<div class="add-sp__payload">
+							<div class="payload__container">
+								<div class="payload__title">Загрузка системы</div>
+								<div class="add-payload__btn more">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="12" y1="8" x2="12" y2="16"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+								<div class="remove-payload__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+							</div>	
+							<form class='payload__form sp-form' id='addSpPayloadForm'>
+								<input class = 'input-payload form-input' placeholder="Номер пары : Загрузка" required>
+							</form>
+						</div>
+						<div class="add-sp__reserve">
+							<div class="reserve__container">
+								<div class="reserve__title">Варианты резервирования</div>
+								<div class="add-reserve__btn more">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="12" y1="8" x2="12" y2="16"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+								<div class="remove-reserve__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+							</div>
+							<form class='reserve__form reserveVariant1 sp-form'>
+								<input class = 'input-reserve form-input name-variant' type="text" value="Основная трасса" required>
+								<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+								<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+								<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>
+								<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+								<div class="add-reserve-part__btn more">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="12" y1="8" x2="12" y2="16"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+								<div class="remove-reserve-part__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+							</form>		
+						</div>
+						<div class='add-sp__buttons'>
+							<div class='add-system__btn instruments__btn'>Добавить систему</div>
+						</div>
+					</div>`
+				let editSpContainer = document.querySelector('.edit-sp__container')
+				addSpContainer = document.querySelector('.add-sp__container')
+				if (editSpContainer) {
+					editSpContainer.remove()
+				} else if (addSpContainer) {
+					addSpContainer.remove()
+				}
+				wrapCont.insertAdjacentHTML('beforeend', addSpHTML)
+				const addPayloadBtn = document.querySelector('.add-payload__btn');
+				const addReserveVariant = document.querySelector('.add-reserve__btn')
+				const addPartOfReserveBtn = document.querySelectorAll('.add-reserve-part__btn')
+				const removePayloadBtn = document.querySelector('.remove-payload__btn')
+				const removeReserveVariantBtn = document.querySelector('.remove-reserve__btn')
+				const removePartOfReserveBtn = document.querySelector('.remove-reserve-part__btn')
+				let inputNumberPin = document.querySelector('#numberPin')
+				let inputNumberSystem = document.querySelector('#numberSP')
+				let inputNumberKMU = document.querySelector('#numberKMU')
+
+				inputNumberPin.addEventListener('keydown', checkInput)
+				inputNumberSystem.addEventListener('keydown', checkInput)
+				inputNumberKMU.addEventListener('keydown', checkInput)
+
+				createInputPayload(addPayloadBtn)
+				removeInputPayload(removePayloadBtn)
+				createInputReserveVariant(addReserveVariant, addPartOfReserveBtn, removePartOfReserveBtn)
+				removeInputReserveVariant(removeReserveVariantBtn)
+				removePartOfReserveBtn.addEventListener('click', removePartOfReserve)
+
+				const inputPayload = document.querySelectorAll('.input-payload')
+				inputPayload.forEach(element => {
+					element.addEventListener('focus', () => {
+						if (event.target.value == '') {
+							event.target.value = ' : '
+						}
+					})
+					element.addEventListener('blur', () => {
+						if (event.target.value == ' : ') {
+							event.target.value = ''
+						}
+					})
+				});
+				let wrapper1Height = document.querySelectorAll('.more')
+				wrapper1Height.forEach(function (item) {
+					item.addEventListener('click', () => {
+						document.querySelector('.wrapper__1--container_open').style.height = document.querySelector('.add-sp__container').offsetHeight+110+"px";
+					})
+				})
+			}
+
+
+			function checkInput(event) {
+				if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 ||
+					// Разрешаем: Ctrl+A
+					(event.keyCode == 65 && event.ctrlKey === true) ||
+					// Разрешаем: home, end, влево, вправо
+					(event.keyCode >= 35 && event.keyCode <= 39)) {
+
+					// Ничего не делаем
+					return;
+				} else {
+					// Запрещаем все, кроме цифр на основной клавиатуре, а так же Num-клавиатуре
+					if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+						event.preventDefault();
+					}
+				}
+			}
+
+			function createInputPayload(addPayloadBtn) {
+				addPayloadBtn.addEventListener('click', () => {
+					const payloadForm = document.querySelector('.payload__form')
+					const inputPayloadHTML = `<input class = 'input-payload form-input' placeholder="Номер пары : Загрузка" required>`	
+					payloadForm.insertAdjacentHTML('beforeend', inputPayloadHTML)
+				})
+			}
+			function removeInputPayload(removePayloadBtn) {
+				removePayloadBtn.addEventListener('click', () => {
+					const payloadForm = document.querySelector('.payload__form')
+					if (payloadForm.childElementCount > 1) {
+						payloadForm.lastChild.remove()
+					}
+				})
+			}
+
+			function createInputReserveVariant(addReserveVariant, addPartOfReserveBtn, removePartOfReserveBtn) {
+				let inputReserveVariantCounter = 2
+				addPartOfReserveBtn.forEach(el => {
+						el.addEventListener('click', addInputPartOfReserve)
+				})
+				
+				addReserveVariant.addEventListener('click', () => {
+					const reserveContainer = document.querySelector('.add-sp__reserve')
+					reserveContainerEdit = document.querySelector('.edit-sp__reserve')
+					const inputReserveVariantHTML =
+						`<form class='reserve__form reserveVariant${inputReserveVariantCounter} sp-form'>
+								<input class = 'input-reserve form-input name-variant' type="text" value="Вариант №" required>
+								<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+								<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+								<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>
+								<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+								<div class="add-reserve-part__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="12" y1="8" x2="12" y2="16"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+								<div class="remove-reserve-part__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+							</form>`
+					if (reserveContainer) {
+						reserveContainer.insertAdjacentHTML('beforeend', inputReserveVariantHTML)
+					} else if (reserveContainerEdit) {
+						reserveContainerEdit.insertAdjacentHTML('beforeend', inputReserveVariantHTML)
+					}
+
+					inputReserveVariantCounter += 1
+					addPartOfReserveBtn = document.querySelectorAll('.add-reserve-part__btn')
+					removePartOfReserveBtn = document.querySelectorAll('.remove-reserve-part__btn')
+
+					addPartOfReserveBtn.forEach(element => {
+						element.removeEventListener('click', addInputPartOfReserve)
+						element.addEventListener('click', addInputPartOfReserve)
+					});
+					removePartOfReserveBtn.forEach(element => {
+						element.removeEventListener('click', removePartOfReserve)
+						element.addEventListener('click', removePartOfReserve)
+					})
+				})
+			}
+
+			function addInputPartOfReserve() {
+				const inputPartOfReserveHTML =
+					`<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+					<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>
+					<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>`
+				let currentBtnPartOfTrase = event.target.closest('.add-reserve-part__btn')
+				currentBtnPartOfTrase.insertAdjacentHTML('beforebegin', inputPartOfReserveHTML)
+			}
+
+			function removeInputReserveVariant(removeReserveVariantBtn) {
+				removeReserveVariantBtn.addEventListener('click', () => {
+					const addSpReserve = document.querySelector('.add-sp__reserve')
+					editSpReserve = document.querySelector('.edit-sp__reserve')
+					if (addSpReserve) {
+						if (addSpReserve.childElementCount > 2) {
+							addSpReserve.lastChild.remove()
+						}
+					} else if (editSpReserve) {
+						if (editSpReserve.childElementCount > 2) {
+							editSpReserve.lastChild.remove()
+						}
+					}
+
+				})
+			}
+
+			function removePartOfReserve() {
+				let reserveForm = event.target.closest('.reserve__form')
+				let inputNodes = reserveForm.querySelectorAll('.node')
+				let inputLines = reserveForm.querySelectorAll('.line')
+				let inputPairs = reserveForm.querySelectorAll('.pair')
+				if (inputNodes.length > 2) {
+					inputNodes[inputNodes.length - 1].remove()
+					inputLines[inputLines.length - 1].remove()
+					inputPairs[inputPairs.length - 1].remove()
+				}
+			}
+
+
+			function addSystemInArray(systemsArray) {
+
+				const addSpContainer = document.querySelector('.add-sp__container')
+
+				document.querySelector('.wrapper__1--container').classList.remove('more-more')
+				document.querySelector('.wrapper__1--container').style.height = "110px"
+
+				let newSystem = new Object();
+				payloadsArray = new Array()
+				payloadsObject = new Object()
+				variantReserveArray = new Array();
+				inputNumberPin = document.querySelector('#numberPin')
+				inputNumberSystem = document.querySelector('#numberSP')
+				inputPriority = document.querySelector('#inputPriority')
+				inputCorrespondent = document.querySelector('#correspondent')
+				inputNumberKMU = document.querySelector('#numberKMU')
+				inputType = document.querySelector('#inputType')
+				inputPayload = document.querySelectorAll('.input-payload')
+				reserveForm = document.querySelectorAll('.reserve__form')
+				inputPayloadCounter = 1
+
+
+				newSystem.id = Number(inputNumberPin.value)
+				newSystem.pin = Number(inputNumberPin.value)
+				newSystem.numberSystem = inputNumberSystem.value
+				newSystem.priority = inputPriority.value
+				newSystem.correspondent = inputCorrespondent.value
+				newSystem.type = inputType.value
+				newSystem.kmu = inputNumberKMU.value
+
+				inputPayload.forEach(el => {
+					payloadsObject['payloads' + inputPayloadCounter] = el.value
+					inputPayloadCounter += 1
+				});
+				payloadsArray.push(payloadsObject)
+				newSystem.payloads = payloadsArray
+
+				reserveForm.forEach(el => {
+					let variantReserveObject = new Object()
+					nodesObject = new Object()
+					linesObject = new Object()
+					pairsObject = new Object()
+					nameVariant = el.querySelector('.name-variant')
+					traceNode = el.querySelectorAll('.node')
+					traceLine = el.querySelectorAll('.line')
+					tracePair = el.querySelectorAll('.pair')
+					nodeCounter = 1
+					lineCounter = 1
+					pairCounter = 1
+					traceNode.forEach(item => {
+						nodesObject['node' + nodeCounter] = item.value
+						nodeCounter += 1
+					})
+					traceLine.forEach(item => {
+						linesObject['line' + lineCounter] = item.value
+						lineCounter += 1
+					})
+					tracePair.forEach(item => {
+						pairsObject['pair' + pairCounter] = item.value
+						pairCounter += 1
+					})
+
+					variantReserveObject["numberVariant"] = nameVariant.value
+					variantReserveObject["nodes"] = nodesObject
+					variantReserveObject["lines"] = linesObject
+					variantReserveObject["pairs"] = pairsObject
+					variantReserveArray.push(variantReserveObject)
+				})
+				newSystem.trases = variantReserveArray
+
+				if (systemsArray.length == 0) {
+					systemsArray.push(newSystem)
+				}else {
+					for (let index = 0; index < systemsArray.length; index++) {
+						const element = systemsArray[index];
+						if (newSystem.pin < element.pin) {
+							systemsArray.splice(index, 0, newSystem)
+							break
+						}else if (newSystem.pin > element.pin){
+							continue
+						}
+						else if (newSystem.pin == element.pin) {
+							systemsArray.push(newSystem)	//Добавить попап что такой пин уже заняти не пушить, addSpContainer не стирать
+							break
+						}
+					}
+				}
+				addSpContainer.remove()
+			}
+
+			function editSP(systemsArray) {
+				const btnEdit = document.querySelectorAll('.btn_edit')
+				let editMainSpHTML =
+					`<div class="edit-sp__container">
+						<div class="edit-sp__main">
+							<div class="main__title">Основная информация</div>
+							<form class='main__form sp-form' id='addSpMainForm'>
+								<input class = 'form-input' type="text" name="№" id="numberPin" placeholder="Введите номер Pin" required>
+								<input class = 'form-input' type="text" name="Система передачи" id="numberSP" placeholder="Введите номер СП" required>
+								<select class = 'form-select' id="inputPriority" placeholder="Выберите приоритет" required>
+									<option selected disabled hidden>Выберите приоритет</option>
+									<option>Обыкновенный</option>
+									<option>Особо важная</option>
+								</select>
+								<input class = 'form-input' type="text" name="Корреспондент" id="correspondent" placeholder="Введите корреспондента" required>
+								<input class = 'form-input' type="text" name="КМУ" id="numberKMU" placeholder="Введите номер КМУ" required>
+								<select class = 'form-select' id = "inputType"> required
+									<option selected disabled hidden>Выберите тип СП</option>
+									<option>Аналоговая</option>
+									<option>Цифровая</option>
+								</select>
+							</form>
+						</div>
+						<div class="edit-sp__payload">
+							<div class="payload__container">
+								<div class="payload__title">Загрузка системы</div>
+								<div class="add-payload__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="12" y1="8" x2="12" y2="16"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+								<div class="remove-payload__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+							</div>
+							<form class='payload__form sp-form' id='editSpPayloadForm'>
+								
+							</form>
+						</div>
+						<div class="edit-sp__reserve">
+							<div class="reserve__container">
+								<div class="reserve__title">Варианты резервирования</div>
+								<div class="add-reserve__btn more">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="12" y1="8" x2="12" y2="16"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+								<div class="remove-reserve__btn">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<circle cx="12" cy="12" r="10"/>
+									<line x1="8" y1="12" x2="16" y2="12"/>
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div class='edit-sp__buttons'>
+							<div class='edit-system__btn instruments__btn'>Сохранить изменения</div>
+						</div>`
+
+				btnEdit.forEach(el => {
+					el.addEventListener('click', (event) => {
+						event.stopImmediatePropagation()
+						let editSpContainer = document.querySelector('.edit-sp__container')
+						addSpContainer = document.querySelector('.add-sp__container')
+						if (editSpContainer) {
+							editSpContainer.remove()
+						} else if (addSpContainer) {
+							addSpContainer.remove()
+						}
+						wrapCont.insertAdjacentHTML('beforeend', editMainSpHTML)
+						let inputNumberPin = document.querySelector('#numberPin')
+						inputNumberSystem = document.querySelector('#numberSP')
+						inputPriority = document.querySelector('#inputPriority')
+						inputCorrespondent = document.querySelector('#correspondent')
+						inputNumberKMU = document.querySelector('#numberKMU')
+						inputType = document.querySelector('#inputType')
+						payloadForm = document.querySelector('.payload__form')
+
+						let systemRow = el.closest('.table__item')
+						systemRowGrid = el.closest('.table__grid')
+						numberPin = systemRow.querySelector('.row-number')
+						numberSP = systemRow.querySelector('.numberSystem')
+						prioritySP = systemRow.querySelector('.priority')
+						correspondent = systemRow.querySelector('.correspondent')
+						numberKMU = systemRow.querySelector('.kmu-number')
+						typeSP = systemRow.querySelector('.type')
+
+						inputNumberPin.value = numberPin.innerText
+						inputNumberSystem.value = numberSP.innerText
+						inputPriority.value = prioritySP.innerText
+						inputCorrespondent.value = correspondent.innerText
+						inputNumberKMU.value = numberKMU.innerText
+						inputType.value = typeSP.innerText
+
+
+						inputNumberPin.addEventListener('keydown', checkInput)
+						inputNumberSystem.addEventListener('keydown', checkInput)
+						inputNumberKMU.addEventListener('keydown', checkInput)
+
+						let found = systemsArray.find(e => e.numberSystem == inputNumberSystem.value)
+						let foundIndex = systemsArray.indexOf(found)
+
+						let	payloadListArray = systemRowGrid.querySelectorAll('.SP-payload')
+
+						for (let index = 0; index < payloadListArray.length; index++) {
+							let editPayloadSpHTML = `<input class = 'input-payload${[index]} form-input' type="text" placeholder="Номер пары : Загрузка" required>`
+							const element = payloadListArray[index];
+							payloadForm.insertAdjacentHTML('beforeend', editPayloadSpHTML)
+							let inputPayload = payloadForm.querySelector(`.input-payload${[index]}`)
+							inputPayload.value = element.textContent
+						}
+
+						const addPayloadBtn = document.querySelector('.add-payload__btn');
+						const removePayloadBtn = document.querySelector('.remove-payload__btn')
+						createInputPayload(addPayloadBtn)
+						removeInputPayload(removePayloadBtn)
+						let inputReserveVariantCounter = 0
+
+						const reserveContainer = document.querySelector('.edit-sp__reserve')
+						for (let index = 0; index < found.trases.length; index++) {
+							const inputReserveVariantHTML =
+								`<form class='reserve__form reserveVariant${inputReserveVariantCounter} sp-form'>
+									<input class = 'input-reserve form-input name-variant' type="text" value="Вариант №" required>
+									<div class="add-reserve-part__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="12" y1="8" x2="12" y2="16"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+									<div class="remove-reserve-part__btn">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10"/>
+										<line x1="8" y1="12" x2="16" y2="12"/>
+										</svg>
+									</div>
+								</form>`
+							reserveContainer.insertAdjacentHTML('beforeend', inputReserveVariantHTML)
+
+							let reserveVariant = found.trases[index]
+							reserveVariantNodes = reserveVariant.nodes;
+							reserveVariantLines = reserveVariant.lines;
+							reserveVariantPairs = reserveVariant.pairs;
+							nodesCounter = Object.keys(reserveVariantNodes).length
+							currentReserveVariant = document.querySelector(`.reserveVariant${inputReserveVariantCounter}`)
+							currentNameVariant = currentReserveVariant.querySelector('.name-variant')
+							reservePartBtn = currentReserveVariant.querySelector('.add-reserve-part__btn')
+
+							currentNameVariant.value = reserveVariant.numberVariant
+							for (let i = 1; i <= nodesCounter; i++) {
+								if (i != nodesCounter) {
+									const inputPartOfReserveHTML =
+										`<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>
+									<input class = 'input-reserve form-input line' type="text" placeholder="Введите КМУ" required>
+									<input class = 'input-reserve form-input pair' type="text" placeholder="Введите пару" required>`
+									reservePartBtn.insertAdjacentHTML('beforebegin', inputPartOfReserveHTML)
+								} else {
+									const inputPartOfReserveHTML =
+										`<input class = 'input-reserve form-input node' type="text" placeholder="Введите узел" required>`
+									reservePartBtn.insertAdjacentHTML('beforebegin', inputPartOfReserveHTML)
+								}
+							}
+
+							traceNodeInput = currentReserveVariant.querySelectorAll('.node')
+							traceLineInput = currentReserveVariant.querySelectorAll('.line')
+							tracePairInput = currentReserveVariant.querySelectorAll('.pair')
+
+							for (let index = 0; index < traceNodeInput.length; index++) {
+								const element = traceNodeInput[index];
+								element.value = reserveVariantNodes[`node${[index + 1]}`]
+							}
+							for (let index = 0; index < traceLineInput.length; index++) {
+								const element = traceLineInput[index];
+								element.value = reserveVariantLines[`line${[index + 1]}`]
+							}
+							for (let index = 0; index < tracePairInput.length; index++) {
+								const element = tracePairInput[index];
+								element.value = reserveVariantPairs[`pair${[index + 1]}`]
+							}
+
+							inputReserveVariantCounter += 1
+						}
+
+						const addReserveVariant = document.querySelector('.add-reserve__btn')
+						const addPartOfReserveBtn = document.querySelectorAll('.add-reserve-part__btn')
+						const removeReserveVariantBtn = document.querySelector('.remove-reserve__btn')
+						const removePartOfReserveBtn = document.querySelectorAll('.remove-reserve-part__btn')
+						createInputReserveVariant(addReserveVariant, addPartOfReserveBtn, removePartOfReserveBtn)
+						removeInputReserveVariant(removeReserveVariantBtn)
+						
+						removePartOfReserveBtn.forEach(el => {
+							el.addEventListener('click', removePartOfReserve)
+						})
+						removePartOfReserveBtn.forEach(el => {
+							el.addEventListener('click', removePartOfReserve)
+						})
+						
+
+						const editSystemInArrayBtn = document.querySelector('.edit-system__btn')
+						editSystemInArrayBtn.addEventListener('click', () => {
+							let allFormSp = document.querySelectorAll('.sp-form')
+							for (let index = 0; index < allFormSp.length; index++) {
+								const el = allFormSp[index];
+								if (el.checkValidity() === true && index + 1 != allFormSp.length) {
+									continue
+								} else if (el.checkValidity() === true && index + 1 == allFormSp.length) {
+									editSystemInArray()
+								} else if (el.checkValidity() === false) {
+									break
+								}
+							}
+						})
+						
+						function editSystemInArray() {
+							let newSystem = new Object();
+									inputNumberPin = document.querySelector('#numberPin')
+									inputNumberSystem = document.querySelector('#numberSP')
+									inputPriority = document.querySelector('#inputPriority')
+									inputCorrespondent = document.querySelector('#correspondent')
+									inputNumberKMU = document.querySelector('#numberKMU')
+									inputType = document.querySelector('#inputType')
+
+							newSystem.id = Number(inputNumberPin.value)
+							newSystem.pin = Number(inputNumberPin.value)
+							newSystem.numberSystem = inputNumberSystem.value
+							newSystem.priority = inputPriority.value
+							newSystem.correspondent = inputCorrespondent.value
+							newSystem.kmu = inputNumberKMU.value
+							newSystem.type = inputType.value
+
+							let payloadForm = document.querySelector('.payload__form')
+									newPayloadsArray = new Array()
+									payloadsObject = new Object()
+									inputPayloadCounter = 1
+									inputPayload = payloadForm.querySelectorAll('.form-input')
+							inputPayload.forEach(el => {
+								payloadsObject['payloads' + inputPayloadCounter] = el.value
+								inputPayloadCounter += 1
+							});
+							newPayloadsArray.push(payloadsObject)
+							newSystem.payloads = newPayloadsArray
+
+							let reserveForm = document.querySelectorAll('.reserve__form')
+							newTrasesArray = new Array()
+							for (let index = 0; index < reserveForm.length; index++) {
+								let element = reserveForm[index];
+								let newVariantReserveObject = new Object()
+								newNodesObject = new Object()
+								newLinesObject = new Object()
+								newPairsObject = new Object()
+								inputNameVariant = element.querySelector('.name-variant')
+								inputNodes = element.querySelectorAll('.node')
+								inputLines = element.querySelectorAll('.line')
+								inputPairs = element.querySelectorAll('.pair')
+
+								for (let i = 0; i < inputNodes.length; i++) {
+									const item = inputNodes[i];
+									newNodesObject[`node${i + 1}`] = item.value
+								}
+								for (let i = 0; i < inputLines.length; i++) {
+									const item = inputLines[i];
+									newLinesObject[`line${i + 1}`] = item.value
+								}
+								for (let i = 0; i < inputPairs.length; i++) {
+									const item = inputPairs[i];
+									newPairsObject[`pair${i + 1}`] = item.value
+								}
+								newVariantReserveObject['numberVariant'] = inputNameVariant.value
+								newVariantReserveObject['nodes'] = newNodesObject
+								newVariantReserveObject['lines'] = newLinesObject
+								newVariantReserveObject['pairs'] = newPairsObject
+								newTrasesArray.push(newVariantReserveObject)
+								newSystem.trases = newTrasesArray
+							}
+
+							if (systemsArray.length == 0) {
+								systemsArray.push(newSystem)
+							}else {
+								for (let index = 0; index < systemsArray.length; index++) {
+									const element = systemsArray[index];
+									if (newSystem.pin < element.pin) {
+										systemsArray.splice(foundIndex, 1)
+										systemsArray.splice(index-1, 0, newSystem)
+										break
+									}else if (newSystem.pin > element.pin){
+										continue
+									}
+									else if (newSystem.pin == element.pin) {
+										systemsArray.push(newSystem)	//Добавить попап что такой пин уже заняти не пушить, addSpContainer не стирать
+										break
+									}
+								}
+							}
+							editSpContainer = document.querySelector('.edit-sp__container')
+							editSpContainer.remove()
+						}
+					})
+				})
+			}
+
+			function removeSP(systemsArray) {
+				const btnRemove = document.querySelectorAll('.btn_delete')
+				btnRemove.forEach(el => {
+					el.addEventListener('click', (event) => {
+						event.stopImmediatePropagation()
+						let systemRow = el.closest('.table__item')
+						let numberSystem = systemRow.querySelector('.numberSystem')
+						let found = systemsArray.findIndex(e => e.numberSystem == numberSystem.innerText)
+						systemsArray.splice(found, 1)
+						systemRow.remove()
+					})
+				});
+			}
+
+			function sendJSON(systemsArray) {
+				let editVersionJSON = new XMLHttpRequest();
+				let systemArrayJSON = JSON.stringify(systemsArray)
+				editVersionJSON.onreadystatechange = function () {
+					if (!this.status == 200) {
+						console.log('Не отправлено');
+					}
+				}
+				editVersionJSON.open('POST', 'editJSON', true);
+				editVersionJSON.send(systemArrayJSON);
+			}
+			
+			function scriptAfterLoad () {
+				
+				const correspondents = document.querySelectorAll('.correspondent')
+				const popupBG = document.querySelector('.popup__bg')
+				const form = document.querySelector('.search-form')
+				const numbersOfSystems = document.querySelectorAll('.numberSystem')
+				const kmuNumbers = document.querySelectorAll('.kmu-number')
+				const preloader = document.querySelector('.preloader')
+				const logTextArea = document.querySelector('#log-area')
+				const logShowButton = document.querySelector('.log-show__button')
+				const logRemoveButton = document.querySelector('.log-remove__button')
+				const logHiddenButton = document.querySelector('.log-hidden__button')
+				const logTextWrap = document.querySelector('.log-text__wrapper')
+
+				///////////////////////////////// раскрытие меню инструментов start////////////////////////////
+				document.querySelector('.btn__more').addEventListener('click', () => {
+					let x = document.querySelector('#log-area').offsetWidth
+
+					if (document.querySelector('.wrapper__1').classList.contains('open')) {
+						document.querySelector('.wrapper__1--container').style.height = "30px"
+						document.querySelector('.wrapper__1').classList.remove('open')
+						document.querySelector('.btn__more').classList.remove('btn_open')
+					} else {
+						document.querySelector('.wrapper__1--container').classList.add('wrapper__1--container_open')
+						document.querySelector('.wrapper__1').classList.add('open')
+						document.querySelector('.btn__more').classList.add('btn_open')
+						if (document.querySelector('.wrapper__1--container').classList.contains('more-more')) {
+							document.querySelector('.wrapper__1--container').style.height = document.querySelector('.add-sp__container').offsetHeight + 90 + "px"
+						} else {
+							document.querySelector('.wrapper__1--container').style.height = "700px"
+						}
+
+					}
+				})
+				///////////////////////////////// раскрытие меню инструментов end////////////////////////////
+
+				///////////////////////////////// Preloader start//////////////////////////////////////
+
+				function load() {
+					preloader.classList.toggle('remove')
+					document.querySelector('body').style.overflowX = 'visible'
+					document.querySelector('body').style.overflowY = 'visible'
+				}
+				/* load(); */
+
+				///////////////////////////////// Preloader end////////////////////////////////////////
+
+				////////////////////////////////////// Popup start///////////////////////////////////////////
+
+				// Отображение и скрытие попапа
+				let system = document.querySelectorAll('.table__grid')
+				function popup() {
+					
+				// Отображение и скрытие попапа
+					system.forEach(function (item) {
+						item.addEventListener('click', function () {
+							let popup = item.querySelector('.popup')
+							let width_position = (document.documentElement.clientWidth - popup.offsetWidth) / 2
+							let height_position = document.documentElement.clientHeight / 2 - (popup.offsetHeight / 2)
+							popupBG.classList.add('popup__bg--on')
+							popup.classList.add('popup__on')
+							popup.style.top = height_position + "px"
+							popup.style.left = width_position + "px"
+							document.querySelector('body').style.overflowY = "hidden"
+							let popupClose = item.querySelector('.close')
+							popupClose.addEventListener('click', (event) => {
+								event.stopPropagation()
+								popupBG.classList.remove('popup__bg--on')
+								popup.classList.remove('popup__on')
+								document.querySelector('body').style.overflowY = "visible"
+							}
+							)
+						})
+					})
+				}
+				popup()
+				
+				/////////////////////////////////////// Popup end////////////////////////////////////////////
+
+
+				////////////////////////////////////// Filters start///////////////////////////////////////////
+
+				///////////////////////////// Фильтр поиск start/////////////////////////////////
+				function filter(ev) {
+					ev.preventDefault()
+					const input = document.querySelector('#system-search')
+					if (Number(input.value)) {
+						let inputValue = input.value.replace(/\D/g, '') // Получает только цифры введенные в поле поиска
+						numbersOfSystems.forEach((item) => {
+							let numberSystem = item.innerHTML // Получаем номер системы
+							let parentNumber = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (numberSystem.includes(inputValue)) {
+								parentNumber.classList.add('.show_search')
+								parentNumber.classList.remove('.hidden_search')
+							} else {
+								parentNumber.classList.add('hidden_search')
+								parentNumber.classList.remove('show_search')
+							}
+						})
+					} else {
+						let inputValue = input.value.replace(/\d/g, '') // Получает только цифры введенные в поле поиска
+						correspondents.forEach((item) => {
+							let correspondent = item.innerHTML.toLowerCase() // Получаем корреспондента
+							let parentCorrespondent = item.closest('.table__grid') // Ищем родителя чтобы скрыть другие
+							if (correspondent.includes(inputValue.toLowerCase())) {
+								parentCorrespondent.classList.add('.show_search')
+								parentCorrespondent.classList.remove('.hidden_search')
+							} else {
+								parentCorrespondent.classList.add('hidden_search')
+								parentCorrespondent.classList.remove('show_search')
+							}
+						})
+					}
+				}
+				function filterReset() {
+					const input = document.querySelector('#system-search')
+					numbersOfSystems.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+					correspondents.forEach((item) => {
+						let parentNumber = item.closest('.table__grid')
+						if ((input.value == null, input.value == '')) {
+							parentNumber.classList.remove('hidden_search')
+						} else {
+							return
+						}
+					})
+				}
+
+				form.addEventListener('keyup', filter)
+				form.addEventListener('keyup', filterReset)
+				///////////////////////////// Фильтр поиск end/////////////////////////////////
+
+				////////////////////////////////////// Filters end///////////////////////////////////////////
+
+				////////////////////////////////////// Чтение лог файла start///////////////////////////////////////////
+
+				async function readLog() {
+					let response = await fetch('/log.xml')
+					//присваиваем значение массива переменной
+					let logText = await response.text() // Распарсили в текст
+					let logTextCorrect = logText.slice(0, -1); //Убрали лишнюю запятую
+					logTextCorrect += "]"
+					let logArray = JSON.parse(logTextCorrect)
+					//теперь передаем этоту переменную с массивом в другую функцию
+					renderLog(logArray)
+				}
+
+				function renderLog(logArray) {
+					logTextArea.innerHTML = '';
+					logArray.forEach(function (item) {
+						const logHTML = `${item.type}: Система передачи - ${item.numberSystem} Время: ${item.time}\n`
+						logTextArea.insertAdjacentHTML('beforeend', logHTML)
+					})
+				}
+
+				logShowButton.addEventListener('click', () => {
+					if (document.querySelector('.add-sp__container')) {
+						let x = document.querySelector('.add-sp__container');
+						x.parentNode.removeChild(x);
+						logTextWrap.classList.toggle('log-read__off')
+						if (document.querySelector('.wrapper__1--container_open').classList.contains('more-log')) {
+							document.querySelector('.wrapper__1--container_open').style.height = "110px";
+							document.querySelector('.wrapper__1--container_open').classList.remove('more-log');
+						} else {
+							document.querySelector('.wrapper__1--container_open').classList.add('more-log');
+							document.querySelector('.wrapper__1--container_open').style.height = "290px";
+						}
+						readLog()
+					} else {
+
+						logTextWrap.classList.toggle('log-read__off')
+						if (document.querySelector('.wrapper__1--container_open').classList.contains('more-log')) {
+							document.querySelector('.wrapper__1--container_open').style.height = "110px";
+							document.querySelector('.wrapper__1--container_open').classList.remove('more-log');
+						} else {
+							document.querySelector('.wrapper__1--container_open').classList.add('more-log');
+							document.querySelector('.wrapper__1--container_open').style.height = "290px";
+						}
+						readLog()
+					}
+				})
+
+				async function removeLog() {
+					let removeLog = new XMLHttpRequest()
+					removeLog.open('GET', 'remove_log', true);
+					removeLog.send();
+				}
+
+				logRemoveButton.addEventListener('click', removeLog)
+
+
+				////////////////////////////////////// Чтение лог файла end///////////////////////////////////////////
+
+				///////////////////////////////////////////MAIN-end////////////////////////////////////////////////
+
+			}
+		</script>
+
+	</body>
+
+</html>
